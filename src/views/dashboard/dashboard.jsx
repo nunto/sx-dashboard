@@ -10,6 +10,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import PieChart from '../../components/widgets/pie_chart';
 import LineChart from '../../components/widgets/line_chart';
+import Gauge from '../../components/widgets/gauge';
+
 
 
 /*
@@ -67,12 +69,21 @@ class Dashboard extends Component {
                     <Grid item xs={12} lg={4}>
                         <Paper>
                           <Card>
-                            <CardHeader
-                            title='Machine workload %s'/>
-                            <CardContent style={{padding: '4px'}}>
+                            <CardHeader title='Live Current Data' />
+                            <CardContent>
+                              <Gauge />
+                            </CardContent>
+                          </Card>
+                      </Paper>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Paper>
+                        <Card>
+                          <CardHeader title='Machine workload %'/>
+                          <CardContent style={{padding: '4px'}}>
                               <PieChart />
                           </CardContent>
-                          </Card>
+                        </Card>
                       </Paper>
                     </Grid>
                 </Grid>

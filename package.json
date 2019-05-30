@@ -10,8 +10,8 @@
     "react-google-charts": "^3.0.13",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
-    "styled-components": "^4.2.0",
-    "tedious": "^6.1.1"
+    "react-websocket": "^2.0.1",
+    "styled-components": "^4.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

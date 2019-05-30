@@ -74,13 +74,10 @@ class Timeline extends Component {
                     startDate,
                     endDate
                 ]
-                console.log(newTaskElement)
-                
                 data.push(newTaskElement)
             }
             this.setState({ data: data })
         })
-        console.log('fetched~~~~~')
     }
 
     constructor(props) {
