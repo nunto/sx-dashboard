@@ -102,7 +102,8 @@ class Timeline extends Component {
         const { data, options } = this.state
         return (
             <Chart
-                width={this.state.width}
+                width={'100%'}
+                height={'100%'}
                 chartType='Timeline'
                 loader={<div>Loading Chart</div>}
                 options={options}

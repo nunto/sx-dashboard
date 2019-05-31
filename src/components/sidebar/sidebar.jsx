@@ -16,7 +16,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import theme from '../../theme/theme';
 
 import Account from '../../views/account/account';
-import Dashboard from '../../views/dashboard/dashboard';
+import Dashboard from '../../views/dashboard/dashboard_v2';
 import Devices from '../../views/devices/devices';
 import MobileListItems from '../../components/items/mobile_list_items';
 import routes from '../../routes';
@@ -53,7 +53,7 @@ class Sidebar extends Component {
                             onClick={this.handleDrawerToggle}
                             className={classes.menuButton}
                         >
-                            <MenuIcon />
+                            <MenuIcon style={{color: 'black'}}/>
                         </IconButton>
                         <Title>{this.firstLetterUpper(window.location.pathname.replace('/main/', ''))}</Title>
                     </Toolbar>

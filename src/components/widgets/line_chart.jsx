@@ -33,8 +33,8 @@ class LineChart extends Component {
         return ( 
             <Chart
                 key={'key' + this.state.width}
-                width={this.state.width}
-                height={'400px'}
+                width={'100%'}
+                height={'100%'}
                 chartType="Line"
                 loader={<div>Loading Chart</div>}
                 data={[

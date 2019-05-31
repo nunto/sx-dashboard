@@ -6,7 +6,6 @@ class PieChart extends Component {
     super(props);
     this.state = {
       width: '30vw',
-      chartWrapper: null
     }
     this.updateWidth = this.updateWidth.bind(this)
   }
@@ -32,11 +31,9 @@ class PieChart extends Component {
 
 render() {
       return (
-        <div>
           <Chart
-            key={'size' + this.state.width}
-            width={this.state.width}
-            height={'300px'}
+            width={'100%'}
+            height={'100%'}
             chartType="PieChart"
             loader={<div>Loading Chart</div>}
             data={[
@@ -46,12 +43,10 @@ render() {
               ['Machine C', 25],
               ['Machine D', 41]
             ]}
-            //options={{
-              //title: 'Task Assignment Locations'
-            //}}
-            rootProps={{ 'data-testid': '1' }}
+            options={{
+            title: 'Task Assignment Locations'
+            }}
           />
-        </div>
       )
 }
 }

@@ -55,8 +55,8 @@ class Gauge extends Component {
         const { data, options, width } = this.state;
         return (
             <Chart
-                width={width}
-                height={300}
+                width={'100%'}
+                height={'100%'}
                 chartType="Gauge"
                 loader={<div>Loading Chart</div>}
                 data={[
