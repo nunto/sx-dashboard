@@ -1,7 +1,7 @@
 # sx-dashboard
 Online dashboard for the IoT sensor project.
 ## React Component
-****
+
 Running the app:  
 While in the project directory, run  
 `npm start` or `yarn start`  
@@ -47,7 +47,7 @@ Entry point for the application.
 <br />
 
 ## Server Component
-****
+
 The backend of the application is made using [go](https://golang.org/).  
 Go files are found in src/server/src/go.  
 **mqtt.go**:  
