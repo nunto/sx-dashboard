@@ -30,8 +30,8 @@ The main layout component is found here, it essentially just renders the Sidebar
 Server components, see [Server Component](#server-component).  
 <br />
 
-**test**:  
-Contains function test files.  
+**__test__**:  
+Contains jest tests.  
 <br />
 
 **theme**:  
