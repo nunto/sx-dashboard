@@ -1,68 +1,75 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# sx-dashboard
 
-## Available Scripts
+## React Component
 
-In the project directory, you can run:
+Running the app:  
+While in the project directory, run  
+`npm start` or `yarn start`  
+to run the application at http://localhost:3000.  
+<br />
 
-### `npm start`
+Building the app:  
+`npm build` or `yarn build`  
+will build the application for production.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### File Structure
+****
+**assets**:  
+Contains any assets the application will use, such as styles and images.  
+<br />
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+**components**:  
+Components that will be rendered in each view/layout are found in this folder.  
+<br />
 
-### `npm test`
+**layout**:  
+The main layout component is found here, it essentially just renders the Sidebar component.  
+<br />
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**server**:  
+Server components, see [Server Component](#server-component).  
+<br />
 
-### `npm run build`
+**test**:  
+Contains function test files.  
+<br />
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**theme**:  
+Defines the theme for the @material-ui library.  
+<br />
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+**views**:  
+Contains a folder for each section linked to by the sidebar.  
+<br />
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**index.js**:  
+Entry point for the application.  
+<br />
 
-### `npm run eject`
+## Server Component
+****
+The backend of the application is made using [go](https://golang.org/).  
+Go files are found in src/server/src/go.  
+**mqtt.go**:  
+MQTT client that receives all the sensor data sent by the broker it has subscribed to.  
+<br />
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**server.go**:  
+Sets up the http server, and contains the main() function that the app enters at.  
+<br />
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**socket.go**:  
+Sets up a websocket server that will send out each new mqtt data to a client.  
+<br />
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+**sql.go**:  
+Retrieves all SQL data returned from a specified query, and responds to the 'GET' request with said data.  
+<br />
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+To build,  
+ `go build -o ../../build/main.exe server.go mqtt.go sql.go socket.go`  
+ will create an executable named main.exe in the build folder (You can change the path and name). To build for cross-platform, or specific platforms, reference https://golang.org/pkg/go/build/.  
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+ If you are just running the files to test, make sure to run all of them at once, as they all rely on each other.  
+ `go run server.go mqtt.go sql.go socket.go`
+ 
