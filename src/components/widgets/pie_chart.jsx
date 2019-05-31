@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Chart from 'react-google-charts';
 
+
 class PieChart extends Component {
   constructor(props) {
     super(props);

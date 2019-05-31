@@ -6,12 +6,13 @@ import Paper from '@material-ui/core/Paper';
 import _ from 'lodash';
 import theme from '../../theme/theme';
 
+// Widgets
 import Timeline from '../../components/widgets/timeline';
 import PieChart from '../../components/widgets/pie_chart';
 import LineChart from '../../components/widgets/line_chart';
 import Gauge from '../../components/widgets/gauge';
 
-
+// Styles
 import '../../assets/css/styles.css';
 import '../../../node_modules/react-grid-layout/css/styles.css';
 import '../../../node_modules/react-resizable/css/styles.css';
@@ -48,6 +49,9 @@ class Dashboard extends PureComponent {
         this.setState({ layouts });
     }
 
+    refreshPage() {
+        window.location.reload();
+    }
 
     render() {
         return(
@@ -55,6 +59,9 @@ class Dashboard extends PureComponent {
                 <span>
                 <Button variant="outlined" color="primary" onClick={() => this.resetLayout()}>
                     Reset
+                </Button>
+                <Button variant="outlined" color="primary" onClick={() => this.refreshPage()}>
+                    Save
                 </Button>
                 </span>
                 <ResponsiveReactGridLayout

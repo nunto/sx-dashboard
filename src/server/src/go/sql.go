@@ -25,11 +25,9 @@ func timeline(w http.ResponseWriter, r *http.Request) {
 	var runningState int
 	var sensorName string
 
-	/*
-	 * Define a struct for the data that will be returned from sql
-	 * Remember to capitalize fields (ElementDate, Status etc)
-	 * so they are public
-	 */
+	// Define a struct for the data that will be returned from sql
+	// Remember to capitalize fields (ElementDate, Status etc)
+	// so they are public
 	type sqldata struct {
 		ElementDate string
 		Status      int
