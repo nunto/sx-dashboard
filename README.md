@@ -1,7 +1,7 @@
 # sx-dashboard
-
+Online dashboard for the IoT sensor project.
 ## React Component
-
+****
 Running the app:  
 While in the project directory, run  
 `npm start` or `yarn start`  
@@ -13,7 +13,7 @@ Building the app:
 will build the application for production.
 
 ### File Structure
-****
+
 **assets**:  
 Contains any assets the application will use, such as styles and images.  
 <br />
@@ -72,4 +72,3 @@ To build,
 
  If you are just running the files to test, make sure to run all of them at once, as they all rely on each other.  
  `go run server.go mqtt.go sql.go socket.go`
- 
