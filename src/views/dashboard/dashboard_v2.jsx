@@ -1,16 +1,15 @@
 import React, { PureComponent } from 'react';
-import { WidthProvider, Responsive } from 'react-grid-layout';
-import { sizing } from '@material-ui/system' 
+import { WidthProvider, Responsive } from 'react-grid-layout'; 
+import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import _ from 'lodash';
-import theme from '../../theme/theme';
 
 // Widgets
 import Timeline from '../../components/widgets/timeline';
 import PieChart from '../../components/widgets/pie_chart';
 import LineChart from '../../components/widgets/line_chart';
 import Gauge from '../../components/widgets/gauge';
+import Popup from '../../components/popup/popup';
 
 // Styles
 import '../../assets/css/styles.css';
@@ -21,23 +20,213 @@ import '../../../node_modules/react-resizable/css/styles.css';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 const originalLayouts = getFromLS('layouts') || {};
 
+const originalItems = getFromLS('items') || 'noItems'
+
+
+const initial =  [{
+                type: 'Timeline',
+                 w: 8, 
+                 h: 3, 
+                 x: 0, 
+                 y: 0, 
+                 minW: 6, 
+                 minH: 3, 
+                 maxH: 6
+            },
+            {
+                type: 'Line Chart',
+                w: 4, 
+                h: 10, 
+                x: 9, 
+                y: 0, 
+                minW: 4, 
+                minH: 6, 
+                maxH: 12
+            },
+            {
+                type: 'Pie Chart',
+                w: 4, 
+                h: 4, 
+                x: 0, 
+                y: 7, 
+                minW: 4, 
+                minH: 4, 
+                maxH: 12
+            },
+            {
+                type: 'Gauge',
+                w: 2, 
+                h: 3, 
+                x: 5, 
+                y: 7, 
+                minW: 2, 
+                minH: 2, 
+                maxH: 12
+            }]
+
+var items = JSON.parse(JSON.stringify(originalItems))
+console.log(items)
+
+//if(originalItems === 'noItems') {
+items = initial.map(function(el, key, list) {
+    return {
+        type: el.type,
+        w: el.w,
+        h: el.h,
+        x: el.x,
+        y: el.y,
+        minW: el.minW,
+        minH: el.minH,
+        maxH: el.maxH,
+        key: key
+    }
+})
+//}
+
+items.forEach((el) => {
+    if (el.x === null) {
+        el.x = Infinity       
+    }
+    if (el.y === null) {
+        el.y = Infinity 
+    }
+    if (el.w === null) {
+        el.w = 1
+    }
+    if (el.h === null) {
+        el.h = 1
+    }
+})
 
 class Dashboard extends PureComponent {
     constructor(props) {
         super(props);
-
         this.state={
-            layouts: JSON.parse(JSON.stringify(originalLayouts))
+            layouts: JSON.parse(JSON.stringify(originalLayouts)),
+            counter: 5,
+            items: items,
+            anchorEl: null,
         };
+        this.onAddItem = this.onAddItem.bind(this);
+        //this.handleClick = this.handleClick.bind(this);
     }
 
     static get defaultProps() {
         return {
             className: 'layout',
             cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
-            rowHeight: 1200
+            rowHeight: 30
 
         };
+    }
+    
+    createElement(el) {
+        const removeStyle = {
+            position: "absolute",
+            right: "2px",
+            top: 0,
+            cursor: "pointer"
+        };
+        if (el.type === 'Timeline') {
+            return(
+                <div key={el.key} data-grid={el}>
+                    <div className='graph_paper'>
+                        <Timeline />
+                    </div>
+                    <span
+                        className="remove"
+                        style={removeStyle}
+                        onClick={this.onRemoveItem.bind(this, el.key)}
+                        >
+                        <CloseIcon />
+                    </span>
+                </div>
+            )
+        } else if (el.type === 'Line Chart') {
+            return(
+                <div key={el.key} data-grid={el}>
+                    <div className='graph_paper'>
+                        <LineChart />
+                    </div>
+                    <span
+                        className="remove"
+                        style={removeStyle}
+                        onClick={this.onRemoveItem.bind(this, el.key)}
+                        >
+                        <CloseIcon />
+                    </span>
+                    </div>
+            )
+        } else if (el.type === 'Pie Chart') {
+            return(
+                <div key={el.key} data-grid={el}>
+                    <div className='graph_paper'>
+                        <PieChart />
+                    </div>
+                    <span
+                        className="remove"
+                        style={removeStyle}
+                        onClick={this.onRemoveItem.bind(this, el.key)}
+                        >
+                        <CloseIcon />
+                    </span>
+                </div>
+            )
+        }
+        return(
+            <div key={el.key} data-grid={el}>
+                <div className='graph_paper'>
+                    <Gauge />
+                </div>
+                <span
+                    className="remove"
+                    style={removeStyle}
+                    onClick={this.onRemoveItem.bind(this, el.key)}
+                    >
+                    <CloseIcon />
+                </span>
+            </div>
+        )
+        }
+    
+    onAddItem(type) {
+        var w, h, minW, minH, maxH = 4;
+        switch(type) {
+            case 'Timeline':
+                w = 8; h = 3; minW = 6; minH = 3; maxH = 6;
+                break;
+            case 'Line Chart':
+                w = 4; h = 10; minW = 4; minH = 6; maxH = 12;
+                break;
+            case 'Pie Chart':
+                w = 4; h = 4; minW = 4; minH = 4; maxH = 12;
+                break;
+            case 'Gauge':
+                w = 2; h = 3; minW = 2; minH = 2; maxH = 12;
+                break;
+            default:
+                w = 4; h = 4; minW = 3; minH = 3; maxH = 12;
+        }
+        var newWidget = {
+            type: type,
+            x: (this.state.items.length * 2) % (this.state.cols || 12),
+            y: Infinity, // puts it at the bottom
+            w: w,
+            h: h,
+            minW: minW,
+            minH: minH,
+            maxH: maxH,
+            key: this.state.counter
+        }
+        this.setState({
+        items: this.state.items.concat(newWidget),
+        counter: this.state.counter + 1
+        });
+    }
+    
+    onRemoveItem(key) {
+        console.log("removing", key);
+        this.setState({ items: _.reject(this.state.items, { key: key }) });
     }
 
     resetLayout() {
@@ -46,23 +235,26 @@ class Dashboard extends PureComponent {
 
     onLayoutChange(layout, layouts) {
         saveToLS('layouts', layouts);
+        saveToLS('items', this.state.items)
         this.setState({ layouts });
     }
 
     refreshPage() {
-        window.location.reload();
+        saveToLS('items', this.state.items)
     }
 
     render() {
+
         return(
             <div>
                 <span>
-                <Button variant="outlined" color="primary" onClick={() => this.resetLayout()}>
+                <Button variant="outlined" color="primary" onClick={() => console.log(this.state.items)}>
                     Reset
                 </Button>
                 <Button variant="outlined" color="primary" onClick={() => this.refreshPage()}>
                     Save
                 </Button>
+                <Popup onAddItem={this.onAddItem}/>
                 </span>
                 <ResponsiveReactGridLayout
                     className='layout'
@@ -71,29 +263,9 @@ class Dashboard extends PureComponent {
                     layouts={this.state.layouts}
                     breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
                     onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
-                    //preventCollision={true}
-                    //verticalCompact={false}
+                    {...this.props}
                 >
-                    <div key='1' data-grid={{ w: 8, h: 3, x: 0, y: 0, minW: 6, minH: 3, maxH: 6 }}>
-                        <div className='graph_paper'>
-                        <Timeline />
-                        </div>
-                    </div>
-                    <div key='2' data-grid={{ w: 4, h: 10, x: 9, y: 0, minW: 4, minH: 6, maxH: 12}}>
-                        <div className='graph_paper'>
-                        <LineChart />
-                        </div>
-                    </div>
-                    <div key ='3' data-grid={{ w: 4, h: 4, x: 0, y: 7, minW: 4, minH: 4, maxH: 12 }}>
-                        <div className='graph_paper'>
-                        <PieChart />
-                        </div>
-                    </div>
-                    <div key ='4' data-grid={{ w: 2, h: 3, x: 5, y: 7, minW: 2, minH: 2, maxH: 12 }}>
-                        <div className='graph_paper'>
-                            <Gauge />
-                        </div>
-                    </div>
+                    {_.map(this.state.items, el => this.createElement(el))}
                 </ResponsiveReactGridLayout>
             </div>
         )

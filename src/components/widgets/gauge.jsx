@@ -52,7 +52,7 @@ class Gauge extends Component {
     }
 
     render() {
-        const { data, options, width } = this.state;
+        const { data, options } = this.state;
         return (
             <Chart
                 width={'100%'}
