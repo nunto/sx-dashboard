@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -23,7 +22,6 @@ class ListItems extends Component {
         return (
             <div>
                 <ListItem>
-                    <ListItemIcon />
                     <ListItemText primary="MTechHub" />
                 </ListItem>
                 <Divider />
@@ -42,9 +40,4 @@ class ListItems extends Component {
         );
     }
 }
-
-ListItems.propTypes = {
-     classes: PropTypes.object.isRequired
- }
-
 export default ListItems;

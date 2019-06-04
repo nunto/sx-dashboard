@@ -49,7 +49,7 @@ func updater(w http.ResponseWriter, r *http.Request) {
 			sendErr := c.WriteMessage(websocket.TextMessage,
 				[]byte(strconv.FormatFloat(prev, 'f', 4, 64)))
 			if sendErr != nil {
-				log.Println("write:", err)
+				log.Println("error writing->:", err)
 				break
 			}
 			log.Printf("%f sent\n", prev)

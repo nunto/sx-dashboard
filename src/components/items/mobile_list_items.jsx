@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -50,10 +49,6 @@ class MobileListItems extends Component {
         );
     }
 }
-
-MobileListItems.propTypes = {
-     classes: PropTypes.object.isRequired
- }
 
 export default MobileListItems;
 
