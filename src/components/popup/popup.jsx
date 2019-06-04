@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import DialogForm from './dialog_form';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,11 +11,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 
 class Popup extends Component {
-    state = {
-        open: false,
-        widgets: ['Timeline', 'Line Chart', 'Pie Chart', 'Gauge']
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            widgets: ['Timeline', 'Line Chart', 'Pie Chart', 'Gauge']
+        }
+        this.dialogFormRef = React.createRef();
     }
-
+    
     handleOpen = () => {
         this.setState({ open: true })
     }
@@ -26,6 +31,7 @@ class Popup extends Component {
     handleClick = (widget) => {
         this.handleClose();
         this.props.onAddItem(widget);
+        this.dialogFormRef.current.handleOpen(widget)
     }
 
     render() {
@@ -46,6 +52,7 @@ class Popup extends Component {
                     ))}
                 </List>
             </Dialog>
+            <DialogForm ref={this.dialogFormRef}/>
         </div>
         )
     }
