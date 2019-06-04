@@ -24,9 +24,12 @@ const msg = 'Please fill all required fields.'
 
 class DialogForm extends Component {
     state = {
+        type: '',
         open: false,
         sensorName: '',
         dbName: '',
+        dataTag: data_tags[0],
+        dataType: data_types[0],
         snackbarOpen: false
     }
 
@@ -42,6 +45,7 @@ class DialogForm extends Component {
             this.setState({ snackbarOpen: true })
         }
         else {
+            this.props.onAddItem(this.state.type)
             this.setState({ 
                 open: false,
                 sensorName: '',
@@ -66,6 +70,12 @@ class DialogForm extends Component {
             case 'db-name':
                 this.setState({ dbName: event.target.value })
                 break;
+            case 'data-tag':
+                this.setState({ dataTag: event.target.value })
+                break;
+            case 'data-type':
+                this.setState({ dataType: event.target.value })
+                break;
             default:
                 this.setState({ 
                     sensorName: 'undefined',
@@ -83,18 +93,19 @@ class DialogForm extends Component {
                         <DialogContentText>
                             Fill out the following information to setup a new graph.
                         </DialogContentText>
-                        <TextField
+                        <StyledTextField
                             id='sensor-name'
                             required
                             label='Sensor Name'
                             margin='dense'
                             onChange={this.handleChange('sensor-name')}
                         />
-                        <TextField
+                        <StyledSelectField
                             id='data-tag'
                             select
                             label='Data ID'
-                            value={data_tags[0]}
+                            value={this.state.dataTag}
+                            onChange={this.handleChange('data-tag')}
                             margin='dense'
                         >
                             {data_tags.map((selectOption, key) => (
@@ -102,20 +113,22 @@ class DialogForm extends Component {
                                     {selectOption}
                                 </MenuItem>
                             ))}
-                        </TextField>
+                        </StyledSelectField>
                         <br />
-                        <TextField
+                        <StyledTextField
                             id='db-name'
                             required
                             label='Database Table Name'
                             margin='dense'
                             onChange={this.handleChange('db-name')}
                         />
-                        <TextField
+                        <StyledSelectField
                             id='data-type'
                             select
                             label='Data Type'
-                            value={data_types[0]}
+                            value={this.state.dataType}
+                            width={'50%'}
+                            onChange={this.handleChange('data-type')}
                             margin='dense'
                         >
                             {data_types.map((selectOption, key) => (
@@ -123,7 +136,7 @@ class DialogForm extends Component {
                                     {selectOption}
                                 </MenuItem>
                             ))}
-                        </TextField>
+                        </StyledSelectField>
                     </DialogContent>
                     <DialogActions>
                                 <Button onClick={this.handleClose} color='gray'>
@@ -160,6 +173,22 @@ class DialogForm extends Component {
         )
     }
 }
+
+const StyledSelectField = withStyles({
+    root: {
+        width: '25%',
+        marginLeft: 8,
+        marginRight: 8
+    }
+})(TextField)
+
+const StyledTextField = withStyles({
+    root: {
+        width: '50%',
+        marginLeft: 8,
+        marginRight: 8
+    }
+})(TextField)
 
 const StyledSnackbar = withStyles({
     root: {

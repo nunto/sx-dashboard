@@ -30,7 +30,7 @@ class Popup extends Component {
 
     handleClick = (widget) => {
         this.handleClose();
-        this.props.onAddItem(widget);
+        //this.props.onAddItem(widget);
         this.dialogFormRef.current.handleOpen(widget)
     }
 
@@ -52,7 +52,7 @@ class Popup extends Component {
                     ))}
                 </List>
             </Dialog>
-            <DialogForm ref={this.dialogFormRef}/>
+            <DialogForm ref={this.dialogFormRef} onAddItem={this.props.onAddItem}/>
         </div>
         )
     }
