@@ -51,34 +51,3 @@ class MobileListItems extends Component {
 }
 
 export default MobileListItems;
-
-
-/* 
-
-            <div>
-                <ListItem>
-                    <ListItemIcon />
-                    <ListItemText primary="MTechHub" />
-                </ListItem>
-                <Divider />
-                <ListItem button>
-                    <ListItemIcon>
-                        <DashboardIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Dashboard" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <PermDeviceInformationIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Devices" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <PeopleIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Account" />
-                </ListItem>
-            </div>
-
- */
