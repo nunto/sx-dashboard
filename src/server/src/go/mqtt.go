@@ -23,7 +23,7 @@ var sv SafeVal
 // Message handler for MQTT, any messages received get handled here
 var f MQTT.MessageHandler = func(client MQTT.Client, msg MQTT.Message) {
 	// Struct used to retrieve data from JSON
-	// Any values defined here will be grabbed from the json in json.Unmarshal5
+	// Any values defined here will be grabbed from the json in json.Unmarshal
 	// Capitalize the var names so they are public
 	// Use pointers for the types so you can identify <nil> values
 	type Data struct {
