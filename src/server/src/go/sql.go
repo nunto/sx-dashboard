@@ -38,6 +38,8 @@ func timeline(w http.ResponseWriter, r *http.Request) {
 	var result []sqldata
 
 	// Query the db
+	// Going to need to change this to a POST request with col names in the
+	// body, and send the result back as a response.
 	rows, err := conn.Query(
 		`SELECT Messagedate, 
 			runningstate, 

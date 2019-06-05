@@ -45,7 +45,8 @@ render() {
               ['Machine D', 41]
             ]}
             options={{
-            title: 'Task Assignment Locations'
+            title: 'Task Assignment Locations',
+            is3D: true,
             }}
           />
       )
