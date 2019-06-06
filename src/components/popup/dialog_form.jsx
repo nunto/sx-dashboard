@@ -61,7 +61,6 @@ class DialogForm extends Component {
 
     handleMqttSubmit = () => {
         var { sensorName, topic, broker } = this.state;
-        console.log('mqtt submit\n' + 's: ' + sensorName + ' t: ' + topic + ' b: ' + broker)
         if ( sensorName === '' || topic === '' || broker === '' ) {
             this.setState({ snackbarOpen: true })
         } else {

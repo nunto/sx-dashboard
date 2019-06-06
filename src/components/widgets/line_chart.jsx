@@ -22,12 +22,12 @@ class LineChart extends Component {
     }
 
     componentDidMount() {
-    this.updateWidth()
-    window.addEventListener("resize", this.updateWidth);
+    //this.updateWidth()
+    //window.addEventListener("resize", this.updateWidth);
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.updateWidth);
+        //window.removeEventListener("resize", this.updateWidth);
     }
     render() {
         return ( 
