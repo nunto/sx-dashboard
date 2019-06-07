@@ -422,7 +422,8 @@ const SectionHeading = withStyles({
     root: {
         fontFamily: 'Roboto',
         marginTop: 24,
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        fontWeight: 'bold'
     }
 })(DialogContentText)
 
