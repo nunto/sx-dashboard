@@ -167,7 +167,7 @@ class DialogForm extends Component {
     }
 
     render() {
-        if (this.state.type === 'Timeline' || this.state.type === 'Line Chart' || this.state.type === 'Pie Chart') {
+        if (this.props.dataType) {
             return (
                 <div>
                     <Dialog open={this.state.open} onClose={this.handleSqlClose} onEscapeKeyDown={this.handleSqlClose} aria-labelledby='dialog'>
@@ -262,7 +262,7 @@ class DialogForm extends Component {
                 </Snackbar>
                 </div>
             )
-        } else if (this.state.type ==='Gauge') {
+        } else {
             return (
                 <div>
                     <Dialog open={this.state.open} onClose={this.handleMqttClose} onEscapeKeyDown={this.handleMqttClose} aria-labelledby='dialog'>
@@ -412,7 +412,7 @@ const StyledInfo = withStyles({
     }
 })(InfoIcon)
 
-const StyledClose= withStyles({
+const StyledClose = withStyles({
     root: {
         fontSize: 20
     }
