@@ -17,7 +17,7 @@ export default SwitchLabel;
 
 const Content = styled.p`
     font-family: Roboto,Helvetica,Arial,sans-serif;
-    font-weight: bold;
+    font-weight: 500;
     line-height: 1.5em;
     color: Black;
 `;

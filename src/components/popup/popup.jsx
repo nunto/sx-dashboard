@@ -69,9 +69,9 @@ class Popup extends Component {
                 <Divider />
                 <List>
                     {this.state.widgets.map(widget => (
-                        <ListItem button onClick={() => this.handleClick(widget)} key={widget}>
+                        <StyledListItem button onClick={() => this.handleClick(widget)} key={widget}>
                             <ListItemText primary={widget} />
-                        </ListItem>
+                        </StyledListItem>
                     ))}
                 </List>
             </Dialog>
@@ -80,6 +80,14 @@ class Popup extends Component {
         )
     }
 }
+
+const StyledListItem = withStyles({
+    root: {
+        '&:hover': {
+            backgroundColor: lightBlue[50],
+        }
+    }
+})(ListItem)
 
 const DataSwitch = withStyles({
     switchBase: {
