@@ -11,15 +11,13 @@ import PermDeviceInformationIcon from '@material-ui/icons/PermDeviceInformation'
 import IconButton from '@material-ui/core/IconButton';
 
 
-class MobileListItems extends Component {
+const items = [
+    { id: 'Dashboard', icon: <DashboardIcon />, path: '/main/dashboard'},
+    { id: 'Devices', icon: <PermDeviceInformationIcon />, path: '/main/devices'},
+    { id: 'Account', icon: <PeopleIcon />, path: '/main/account'},
+]
 
-    state = {
-        items: [
-            { id: 'Dashboard', icon: <DashboardIcon />, path: '/main/dashboard'},
-            { id: 'Devices', icon: <PermDeviceInformationIcon />, path: '/main/devices'},
-            { id: 'Account', icon: <PeopleIcon />, path: '/main/account'},
-        ]
-    }
+class MobileListItems extends Component {
     render() {
         return (
             <div>
@@ -34,7 +32,7 @@ class MobileListItems extends Component {
                     <ListItemText primary="MTechHub" />
                 </ListItem>
                 <Divider />
-                {this.state.items.map(({ id, icon, path }) => (
+                {items.map(({ id, icon, path }) => (
                     <ListItem 
                         button
                         key={id}

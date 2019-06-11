@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItems from '../items/list_items';
 import MenuIcon from '@material-ui/icons/Menu';
+import SettingsIcon from '@material-ui/icons/Settings';
 import Toolbar from '@material-ui/core/Toolbar';
 import theme from '../../theme/theme';
 
@@ -27,6 +28,7 @@ const drawerWidth = 240;
 class Sidebar extends Component {
     state = {
         mobileOpen: false,
+        settingsOpen: false,
     }
 
     handleDrawerToggle = () => {
@@ -37,6 +39,10 @@ class Sidebar extends Component {
         if (routes.includes(word)) {
             return word.charAt(0).toUpperCase() + word.slice(1);
         }
+    }
+
+    settingsMenu = () => {
+
     }
 
     render() {
@@ -56,6 +62,13 @@ class Sidebar extends Component {
                             <MenuIcon style={{color: 'black'}}/>
                         </IconButton>
                         <Title>{this.firstLetterUpper(window.location.pathname.replace('/main/', ''))}</Title>
+                        <IconButton
+                            aria-label='Settings'
+                            onClick={this.settingsMenu}
+                            color='black'
+                        >
+                            <SettingsIcon />
+                        </IconButton>
                     </Toolbar>
                 </AppBar>
                 <nav className={classes.drawer}>
@@ -110,7 +123,9 @@ const Title = styled.h2`
     font-weight: 300;
     font-size: 20px;
     line-height: 1.5em;
-    color: Black; 
+    color: Black;
+    flex-grow: 1;
+    align: right;
 `;
 
 const styles = theme => ({ 

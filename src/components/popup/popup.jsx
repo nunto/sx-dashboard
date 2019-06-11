@@ -15,13 +15,14 @@ import Switch from '@material-ui/core/Switch';
 import SwitchLabel from '../label/switch_label';
 
 
+const widgets = ['Timeline', 'Line Chart', 'Pie Chart', 'Gauge']
+
 class Popup extends Component {
     constructor(props) {
         super(props);
         this.state = {
             open: false,
-            sqlChecked: true,
-            widgets: ['Timeline', 'Line Chart', 'Pie Chart', 'Gauge']
+            sqlChecked: true
         }
         this.dialogFormRef = React.createRef();
     }
@@ -72,7 +73,7 @@ class Popup extends Component {
                 </div>
                 <Divider />
                 <List>
-                    {this.state.widgets.map(widget => (
+                    {widgets.map(widget => (
                         <StyledListItem button onClick={() => this.handleClick(widget)} key={widget}>
                             <ListItemText primary={widget} />
                         </StyledListItem>

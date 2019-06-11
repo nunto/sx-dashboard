@@ -9,15 +9,14 @@ import PeopleIcon from '@material-ui/icons/People';
 import PermDeviceInformationIcon from '@material-ui/icons/PermDeviceInformation'
 
 
+const items = [
+    { id: 'Dashboard', icon: <DashboardIcon />, path: '/main/dashboard'},
+    { id: 'Devices', icon: <PermDeviceInformationIcon />, path: '/main/devices'},
+    { id: 'Account', icon: <PeopleIcon />, path: '/main/account'},
+]
+
 class ListItems extends Component {
 
-    state = {
-        items: [
-            { id: 'Dashboard', icon: <DashboardIcon />, path: '/main/dashboard'},
-            { id: 'Devices', icon: <PermDeviceInformationIcon />, path: '/main/devices'},
-            { id: 'Account', icon: <PeopleIcon />, path: '/main/account'},
-        ]
-    }
     render() {
         return (
             <div>
@@ -25,7 +24,7 @@ class ListItems extends Component {
                     <ListItemText primary="MTechHub" />
                 </ListItem>
                 <Divider />
-                {this.state.items.map(({ id, icon, path }) => (
+                {items.map(({ id, icon, path }) => (
                     <ListItem 
                         button
                         key={id}
