@@ -26,20 +26,24 @@ class Popup extends Component {
         this.dialogFormRef = React.createRef();
     }
     
+    // On Dialog open
     handleOpen = () => {
         this.setState({ open: true })
     }
 
+    // On Dialog close
     handleClose = () => {
         this.setState({ open: false })
     }
 
+    // Send it to a ref function
     handleClick = (widget) => {
         this.handleClose();
         //this.props.onAddItem(widget);
         this.dialogFormRef.current.handleOpen(widget)
     }
 
+    // on switch toggle
     handleSwitch = () => {
         this.setState({ sqlChecked: !this.state.sqlChecked });
     }
@@ -81,6 +85,7 @@ class Popup extends Component {
     }
 }
 
+// Changes hover colour of the ListItems in the Dialog
 const StyledListItem = withStyles({
     root: {
         '&:hover': {
@@ -89,12 +94,13 @@ const StyledListItem = withStyles({
     }
 })(ListItem)
 
+// SQL vs MQTT Switch Styling
 const DataSwitch = withStyles({
     switchBase: {
         color: blue[500],
-        '&$checked': {
-            color: blue[500],
-            '& + $bar': {
+        '&$checked': { // Props of the switch when it has been moved to 'on'
+            color: blue[500], // Colour of the circle part of the switch
+            '& + $bar': { // Props of the bar after being moved to 'on'
                 backgroundColor: lightBlue[200],
                 opacity: 1
             }
@@ -102,16 +108,9 @@ const DataSwitch = withStyles({
     },
     checked: {},
     bar: {
-        backgroundColor: lightBlue[200],
+        backgroundColor: lightBlue[200], // Default colour of the bar the switch 'slides' along 
         opacity: 1
     },
 })(Switch);
 
 export default Popup;
-
-/**
- * '&$checked + $track': {
-            backgroundColor: 'white',
-            opacity: 1,
-        },
- */
