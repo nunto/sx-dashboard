@@ -60,7 +60,7 @@ class Popup extends Component {
                 <DialogTitle id='dialog-title'>Select a widget
                 </DialogTitle>
                 <div style={{margin: '16px'}}>
-                <Grid component="label" container alignItems="center" spacing={1}>
+                <Grid component="label" container alignItems="center">
                     <Grid item><SwitchLabel bold={this.state.sqlChecked} label={'SQL'} /></Grid>
                     <Grid item>
                         <DataSwitch

@@ -65,7 +65,6 @@ class Sidebar extends Component {
                         <IconButton
                             aria-label='Settings'
                             onClick={this.settingsMenu}
-                            color='black'
                         >
                             <SettingsIcon />
                         </IconButton>

@@ -18,10 +18,11 @@ import '../../../node_modules/react-resizable/css/styles.css';
 
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
-const originalLayouts = getFromLS('layouts') || {};
+const originalLayouts = getFromLS('layouts', 'layout') || {};
+console.log('orig layouts: ' + originalLayouts)
 
-const originalItems = getFromLS('items') || 'noItems'
-
+const originalItems = getFromLS('items', 'item') || 'noItems'
+console.log('orig items: ' + originalItems);
 
 const initial =  [{
                 type: 'Timeline',
@@ -67,7 +68,7 @@ const initial =  [{
 var items = JSON.parse(JSON.stringify(originalItems))
 console.log(items)
 
-//if(originalItems === 'noItems') {
+if (originalItems === 'noItems') {
 items = initial.map(function(el, key, list) {
     return {
         type: el.type,
@@ -81,7 +82,9 @@ items = initial.map(function(el, key, list) {
         key: key
     }
 })
-//}
+}
+
+const initialCounter = items.length + 1;
 
 items.forEach((el) => {
     if (el.x === null) {
@@ -98,12 +101,14 @@ items.forEach((el) => {
     }
 })
 
+console.log('items=> ' + items);
+
 class Dashboard extends PureComponent {
     constructor(props) {
         super(props);
         this.state={
             layouts: JSON.parse(JSON.stringify(originalLayouts)),
-            counter: 5,
+            counter: initialCounter,
             items: items,
             anchorEl: null,
         };
@@ -234,12 +239,39 @@ class Dashboard extends PureComponent {
     }
 
     onLayoutChange(layout, layouts) {
-        saveToLS('layouts', layouts);
-        saveToLS('items', this.state.items)
-        this.setState({ layouts });
+        var width = window.innerWidth;
+        var bp = 'sm'
+        if (width >= 1200) {
+            bp = 'lg'
+        } else if (width >= 996) {
+            bp = 'md'
+        } else if (width >= 768) {
+            bp = 'sm'
+        } else if (width >= 480) {
+            bp = 'xs'
+        } else {
+            bp = 'xxs'
+        }
+
+        console.log(this.state.items)
+
+        var items = this.state.items
+        if (layouts[bp] !== undefined && items !== undefined) {
+        for (var i = 0; i < items.length; i++) {
+            items[i]['w'] = layouts[bp][i]['w'];
+            items[i]['h'] = layouts[bp][i]['h'];
+            items[i]['x'] = layouts[bp][i]['x'];
+            items[i]['y'] = layouts[bp][i]['y'];
+        }
     }
 
-    refreshPage() {
+        saveToLS('items', items, 'item');
+        saveToLS('layouts', layouts, 'layout');
+        this.setState({ layouts });
+        this.setState({ items: items })
+    }
+
+    saveItems() {
         saveToLS('items', this.state.items)
     }
 
@@ -251,7 +283,7 @@ class Dashboard extends PureComponent {
                 <Button variant="outlined" color="primary" onClick={() => console.log(this.state.items)}>
                     Reset
                 </Button>
-                <Button variant="outlined" color="primary" onClick={() => this.refreshPage()}>
+                <Button variant="outlined" color="primary" onClick={() => this.saveItems()}>
                     Save
                 </Button>
                 <Popup onAddItem={this.onAddItem}/>
@@ -274,22 +306,23 @@ class Dashboard extends PureComponent {
 }
 
 
-function getFromLS(key) {
+function getFromLS(key, type) {
     let ls = {};
     if (global.localStorage) {
         try {
-            ls = JSON.parse(global.localStorage.getItem('rgl-8')) || {};
+            ls = JSON.parse(global.localStorage.getItem(type)) || {};
         } catch(e) {
             /*Ignore*/
+            console.log(e);
         }
     }
     return ls[key];
 }
 
-function saveToLS(key, value) {
+function saveToLS(key, value, type) {
     if (global.localStorage) {
         global.localStorage.setItem(
-            'rgl-8',
+            type,
             JSON.stringify({
                 [key]: value
             })
