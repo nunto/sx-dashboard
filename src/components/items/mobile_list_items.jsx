@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { lightBlue } from '@material-ui/core/colors';
+import { withStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
@@ -36,19 +38,41 @@ class MobileListItems extends Component {
                 </ListItem>
                 <Divider />
                 {items.map(({ id, icon, path }) => (
-                    <ListItem 
+                    <StyledListItem 
                         button
                         key={id}
                         component={Link} to={path}
                         >
                             <ListItemIcon>{icon}</ListItemIcon>
                             <ListItemText>{id}</ListItemText>
-                    </ListItem>
+                    </StyledListItem>
 
                 ))}
             </div>
         );
     }
 }
+
+const StyledListItem = withStyles({
+    root: {
+        '&$focusVisible': {
+            backgroundColor: lightBlue[50],
+          },
+    },
+    button: {
+        color: lightBlue[700],
+        '&:hover': {
+            backgroundColor: lightBlue[50],
+            '@media (hover: none)': {
+                backgroundColor: 'transparent',
+              },
+        },
+        '&:active': {
+            color: lightBlue[700]
+        }
+    },
+    selected: {},
+    focusVisible: {},
+})(ListItem);
 
 export default MobileListItems;

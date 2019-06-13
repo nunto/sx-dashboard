@@ -59,7 +59,7 @@ const StyledListItem = withStyles({
               },
         },
         '&:active': {
-            color: lightBlue[700]
+            color: lightBlue[700],
         }
     },
     selected: {},
