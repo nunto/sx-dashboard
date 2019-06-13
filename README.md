@@ -1,5 +1,4 @@
 # sx-dashboard
-Online dashboard for the IoT sensor project.
 ## React Component
 
 Running the app:  
