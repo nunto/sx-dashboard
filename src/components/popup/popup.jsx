@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/styles';
 import { blue, lightBlue } from '@material-ui/core/colors';
-import DialogForm from './dialog_form';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import { withStyles } from '@material-ui/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
+import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Switch from '@material-ui/core/Switch';
+// Components
+import DialogForm from './dialog_form';
 import SwitchLabel from '../label/switch_label';
+// Icons
+import AddIcon from '@material-ui/icons/Add';
 
 
+// Current widgets list
 const widgets = ['Timeline', 'Line Chart', 'Pie Chart', 'Gauge']
 
+// Initial popup where users select which kind of chart they want to create
 class Popup extends Component {
     constructor(props) {
         super(props);
@@ -24,6 +28,7 @@ class Popup extends Component {
             open: false,
             sqlChecked: true
         }
+        // Create a ref to let us access handleOpen in dialog_form
         this.dialogFormRef = React.createRef();
     }
     
@@ -37,14 +42,14 @@ class Popup extends Component {
         this.setState({ open: false })
     }
 
-    // Send it to a ref function
+    // Called on selection, sends it to dialog_form's handleOpen
     handleClick = (widget) => {
         this.handleClose();
         //this.props.onAddItem(widget);
         this.dialogFormRef.current.handleOpen(widget)
     }
 
-    // on switch toggle
+    // Called on a toggle of the switch
     handleSwitch = () => {
         this.setState({ sqlChecked: !this.state.sqlChecked });
     }
@@ -95,7 +100,7 @@ const StyledListItem = withStyles({
     }
 })(ListItem)
 
-// SQL vs MQTT Switch Styling
+// Switch Styling to make it look less like an 'on/off' switch
 const DataSwitch = withStyles({
     switchBase: {
         color: blue[500],

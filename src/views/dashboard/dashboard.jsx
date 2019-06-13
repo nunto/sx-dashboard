@@ -1,15 +1,14 @@
 import React, { PureComponent } from 'react';
 import { WidthProvider, Responsive } from 'react-grid-layout';
-import CloseIcon from '@material-ui/icons/Close';
 import _ from 'lodash';
-
-// Widgets
+// Components
 import Timeline from '../../components/widgets/timeline';
 import PieChart from '../../components/widgets/pie_chart';
 import LineChart from '../../components/widgets/line_chart';
 import Gauge from '../../components/widgets/gauge';
 import Popup from '../../components/popup/popup';
-
+//Icons
+import CloseIcon from '@material-ui/icons/Close';
 // Styles
 import '../../assets/css/styles.css';
 import '../../../node_modules/react-grid-layout/css/styles.css';
@@ -17,12 +16,16 @@ import '../../../node_modules/react-resizable/css/styles.css';
 
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
+
+// Get user's layout from storage if available
 const originalLayouts = getFromLS('layouts', 'layout') || {};
 console.log('orig layouts: ' + originalLayouts)
 
+// Get user's charts from storage if available
 const originalItems = getFromLS('items', 'item') || 'noItems'
 console.log('orig items: ' + originalItems);
 
+// Initial items to be used if they weren't found
 const initial =  [{
                 type: 'Timeline',
                  w: 8, 
@@ -64,6 +67,7 @@ const initial =  [{
                 maxH: 12
             }]
 
+// Format items into a readable state for rgl (react-grid-layout)
 var items = JSON.parse(JSON.stringify(originalItems))
 console.log(items)
 
@@ -83,6 +87,7 @@ items = initial.map(function(el, key, list) {
 })
 }
 
+// Counter is used for setting item keys
 const initialCounter = items.length + 1;
 
 items.forEach((el) => {
@@ -124,6 +129,7 @@ class Dashboard extends PureComponent {
         };
     }
     
+    // Create a chart
     createElement(el) {
         const removeStyle = {
             position: "absolute",
@@ -193,6 +199,7 @@ class Dashboard extends PureComponent {
         )
         }
     
+    // Create grid settings for the layout
     onAddItem(type) {
         var w, h, minW, minH, maxH = 4;
         switch(type) {
@@ -228,17 +235,21 @@ class Dashboard extends PureComponent {
         });
     }
     
+    // Remove an item from the dashboard
     onRemoveItem(key) {
         console.log("removing", key);
         this.setState({ items: _.reject(this.state.items, { key: key }) });
     }
 
+    // Reset the saved layout
     resetLayout() {
         this.setState({ layouts: {} });
     }
 
+    // Called when any element is moved or a new one added
     onLayoutChange(layout, layouts) {
         var width = window.innerWidth;
+        // Calculate the current breakpoint
         var bp = 'sm'
         if (width >= 1200) {
             bp = 'lg'
@@ -254,6 +265,8 @@ class Dashboard extends PureComponent {
 
         console.log(this.state.items)
 
+        // Set the items array to have the same layout as currently on screen
+        // for that specific breakpoint
         var items = this.state.items
         if (layouts[bp] !== undefined && items !== undefined) {
         for (var i = 0; i < items.length; i++) {
@@ -263,17 +276,13 @@ class Dashboard extends PureComponent {
             items[i]['y'] = layouts[bp][i]['y'];
         }
     }
-
+        // Save data to LS
         saveToLS('items', items, 'item');
         saveToLS('layouts', layouts, 'layout');
         this.setState({ layouts });
         this.setState({ items: items })
     }
-
-    saveItems() {
-        saveToLS('items', this.state.items)
-    }
-
+    
     render() {
         // Might need to move FAB into this component
         return(

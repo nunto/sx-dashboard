@@ -1,30 +1,33 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
-import ListItems from '../items/list_items';
-import MenuIcon from '@material-ui/icons/Menu';
-import SettingsIcon from '@material-ui/icons/Settings';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Toolbar from '@material-ui/core/Toolbar';
-import theme from '../../theme/theme';
-
+// Components
 import Account from '../../views/account/account';
 import Dashboard from '../../views/dashboard/dashboard';
 import Devices from '../../views/devices/devices';
+import ListItems from '../items/list_items';
 import MobileListItems from '../../components/items/mobile_list_items';
 import routes from '../../routes';
+import theme from '../../theme/theme';
+// Icons
+import MenuIcon from '@material-ui/icons/Menu';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 
+// Width of the sidebar drawer
 const drawerWidth = 240;
 
+// Navigation drawer at the side and toolbar along the top
 class Sidebar extends Component {
     state = {
         mobileOpen: false,

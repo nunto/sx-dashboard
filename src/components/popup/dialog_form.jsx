@@ -1,27 +1,31 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
-import TextField from '@material-ui/core/TextField';
-import CloseIcon from '@material-ui/icons/Close';
-import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
-import { withStyles } from '@material-ui/core/styles';
-
+import styled from 'styled-components';
+import TextField from '@material-ui/core/TextField';
+//Icons
+import CloseIcon from '@material-ui/icons/Close';
+import InfoIcon from '@material-ui/icons/Info';
+// Styles
 import '../../assets/css/styles.css';
 
+
+// UI Data
 const data_tags = ['ai1', 'ai2', 'ai3', 'di1', 'di2', 'di3']
 const data_types = ['Current', 'Pressure', 'Flow']
 const msg = 'Please fill all required fields.'
 
+// Secondary popup where users select where the chart data should come from
 class DialogForm extends Component {
     state = {
         type: 'Timeline',
@@ -33,6 +37,7 @@ class DialogForm extends Component {
         snackbarOpen: false
     }
 
+    // Opens dialog, (gets called from popup.jsx)
     handleOpen = (type) => {
         this.setState({ 
             open: true,
@@ -40,8 +45,10 @@ class DialogForm extends Component {
         })
     }
 
+    // Handles a SQL data request
     handleSqlSubmit = () => {
         var { dbName, username, password, sensorName, dateField, runningState } = this.state;
+        // Should definitely fix this if statement
         if ( dbName === '' || username === '' || password === '' || sensorName === '' || dateField === '' || runningState === '' ) {
             this.setState({ snackbarOpen: true })
         }
@@ -59,8 +66,10 @@ class DialogForm extends Component {
         }
     }
 
+    // Handles an MQTT data request 
     handleMqttSubmit = () => {
         var { sensorName, topic, broker } = this.state;
+        // Should fix this if statement too
         if ( sensorName === '' || topic === '' || broker === '' ) {
             this.setState({ snackbarOpen: true })
         } else {
@@ -76,6 +85,7 @@ class DialogForm extends Component {
         }
     }
 
+    // Called when closing the SQL dialog
     handleSqlClose = () => {
         this.setState({ 
             open: false,
@@ -88,6 +98,7 @@ class DialogForm extends Component {
         })
     }
 
+    // Called when closing the MQTT dialog
     handleMqttClose = () => {
         this.setState({ 
             open: false,
@@ -99,10 +110,12 @@ class DialogForm extends Component {
          })
     }
 
+    // Called when snackbar is closed
     handleSnackbarClose = () => {
         this.setState({ snackbarOpen: false })
     }
 
+    // Called on any SQL form value change
     handleSqlChange = (field) => (event) => {
         var val = event.target.value
         switch(field) {
@@ -132,6 +145,7 @@ class DialogForm extends Component {
         }
     }
 
+    // Called on any MQTT form value change
     handleMqttChange = (field) => (event) => {
         var val = event.target.value
         switch(field) {
@@ -167,6 +181,8 @@ class DialogForm extends Component {
     }
 
     render() {
+        // Conditional rendering
+        // Renders either the SQL or MQTT data request forms based on the value of dataType
         if (this.props.dataType) {
             return (
                 <div>

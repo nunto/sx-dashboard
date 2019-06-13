@@ -2,34 +2,8 @@ import React, { Component } from 'react';
 import Chart from 'react-google-charts';
 
 
+// Pie Chart -- need to add other methods of getting data
 class PieChart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      width: '30vw',
-    }
-    this.updateWidth = this.updateWidth.bind(this)
-  }
-  updateWidth() {
-    if (window.innerWidth >= 1280 ) {
-      this.setState({ width: '30vw' })
-      console.log('large window - resizing to 40vw')
-      
-    } else {
-      this.setState({ width: '70vw' })
-      console.log('small window - resizing to 70vw')
-    }
-  }
-
-  componentDidMount() {
-    this.updateWidth()
-    window.addEventListener("resize", this.updateWidth);
-  }
-
-  componentWillUnmount() {
-        window.removeEventListener("resize", this.updateWidth);
-    }
-
 render() {
       return (
           <Chart

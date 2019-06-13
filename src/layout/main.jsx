@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// Components
 import Sidebar from '../components/sidebar/sidebar';
 
 

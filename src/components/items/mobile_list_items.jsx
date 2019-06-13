@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import ArrowBack from '@material-ui/icons/ArrowBack';
 import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+// Icons
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 import PermDeviceInformationIcon from '@material-ui/icons/PermDeviceInformation'
-import IconButton from '@material-ui/core/IconButton';
 
 
+// The routes that'll appear on the sidebar
 const items = [
     { id: 'Dashboard', icon: <DashboardIcon />, path: '/main/dashboard'},
     { id: 'Devices', icon: <PermDeviceInformationIcon />, path: '/main/devices'},
     { id: 'Account', icon: <PeopleIcon />, path: '/main/account'},
 ]
 
+// This component renders when the screen is smaller and the sidebar is hidden in a menu
 class MobileListItems extends Component {
     render() {
         return (

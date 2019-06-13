@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import Chart from 'react-google-charts';
-
+// Styles
 import '../../assets/css/charts.css';
 
 
+// Timeline chart to show when the machine was running/off
 class Timeline extends Component {
+    state = {
+
+    }
+    
     componentDidMount() {
+        // Grab data when component mounts
         this.getData();
     }
 
+    // Calculate the duration in hours:mins between 2 dates
     getDuration = (d1, d2) => {
         var d3 = new Date(d2 - d1);
         var d0 = new Date(0);
@@ -39,10 +46,12 @@ class Timeline extends Component {
         };
     }
 
+    // Get data from api created in go
     async getData() {
         await fetch('http://172.18.19.97:8080/api/timeline')
         .then((res) => res.json())
         .then((resJson) => {
+            // Set up the chart data
             var data = [
             [
                 { type: 'string', id: 'Position' },

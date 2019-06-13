@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import Chart from 'react-google-charts';
 
 
+// Websocket to retrieve MQTT data
 const ws = new WebSocket('ws://localhost:8080/current');
 
+// Gauge Chart
 class Gauge extends Component {
     state = {
         data: 0.0,
-        width: '30vw',
         options: {
             redFrom: 8,
             redTo: 10,
@@ -22,22 +23,8 @@ class Gauge extends Component {
         }
     }
 
-    updateWidth = function() {
-        if (window.innerWidth >= 1280 ) {
-        this.setState({ width: '30vw' })
-        console.log('large window - resizing to 40vw')
-        
-        } else {
-        this.setState({ width: '70vw' })
-        console.log('small window - resizing to 70vw')
-        }
-    }.bind(this)
-
+    // Set a listener for ws data
     componentDidMount() {
-        this.updateWidth()
-
-        window.addEventListener("resize", this.updateWidth);
-
         ws.onmessage = function(e) {
             console.log('Websocket msg received: ' +  e.data);
             var f = parseFloat(e.data)
@@ -47,7 +34,6 @@ class Gauge extends Component {
     }
 
     componentWillUnmount() {
-        window.removeEventListener("resize", this.updateWidth);
         ws.close(1000)
     }
 

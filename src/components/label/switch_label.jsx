@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 
-
+// Label that appears on either side of the switch component
 function SwitchLabel(props) {
     if (props.bold === true) {
         return (
