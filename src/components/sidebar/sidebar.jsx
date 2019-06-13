@@ -17,7 +17,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import theme from '../../theme/theme';
 
 import Account from '../../views/account/account';
-import Dashboard from '../../views/dashboard/dashboard_v2';
+import Dashboard from '../../views/dashboard/dashboard';
 import Devices from '../../views/devices/devices';
 import MobileListItems from '../../components/items/mobile_list_items';
 import routes from '../../routes';
