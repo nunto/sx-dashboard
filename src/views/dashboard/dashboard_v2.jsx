@@ -276,16 +276,10 @@ class Dashboard extends PureComponent {
     }
 
     render() {
-
+        // Might need to move FAB into this component
         return(
             <div>
                 <span>
-                <Button variant="outlined" color="primary" onClick={() => console.log(this.state.items)}>
-                    Reset
-                </Button>
-                <Button variant="outlined" color="primary" onClick={() => this.saveItems()}>
-                    Save
-                </Button>
                 <Popup onAddItem={this.onAddItem}/>
                 </span>
                 <ResponsiveReactGridLayout
