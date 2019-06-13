@@ -16,7 +16,6 @@ import SwitchLabel from '../label/switch_label';
 // Icons
 import AddIcon from '@material-ui/icons/Add';
 
-
 // Current widgets list
 const widgets = ['Timeline', 'Line Chart', 'Pie Chart', 'Gauge']
 
@@ -57,7 +56,7 @@ class Popup extends Component {
     render() {
         return (
             <div>
-            <Fab variant='extended' color='primary' aria-label='Add' onClick={this.handleOpen}>
+            <Fab style={fabStyle} variant='extended' color='primary' aria-label='Add' onClick={this.handleOpen}>
                 <AddIcon />
                 Add Widget
             </Fab>
@@ -99,6 +98,16 @@ const StyledListItem = withStyles({
         }
     }
 })(ListItem)
+
+const fabStyle = {
+    margin: 0,
+    top: 'auto',
+    right: 20,
+    bottom: 20,
+    left: 'auto',
+    position: 'fixed',
+}
+
 
 // Switch Styling to make it look less like an 'on/off' switch
 const DataSwitch = withStyles({

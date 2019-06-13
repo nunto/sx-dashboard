@@ -7,7 +7,6 @@ class LineChart extends Component {
     render() {
         return ( 
             <Chart
-                key={'key' + this.state.width}
                 width={'100%'}
                 height={'100%'}
                 chartType="Line"
