@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { WidthProvider, Responsive } from 'react-grid-layout'; 
+import { WidthProvider, Responsive } from 'react-grid-layout';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
 import _ from 'lodash';

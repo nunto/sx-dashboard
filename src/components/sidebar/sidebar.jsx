@@ -31,18 +31,21 @@ class Sidebar extends Component {
         settingsOpen: false,
     }
 
+    // Toggles whether the sidebar has an open icon or not
     handleDrawerToggle = () => {
         this.setState(state => ({ mobileOpen: !state.mobileOpen }));
     };
 
+    // Sets the first letter of a word to uppercase -- used for displaying the pathname
     firstLetterUpper = word => {
         if (routes.includes(word)) {
             return word.charAt(0).toUpperCase() + word.slice(1);
         }
     }
-
+    
+    // Settings menu could have options for changing the theme colours?
     settingsMenu = () => {
-
+        // Need to fill in
     }
 
     render() {
@@ -115,7 +118,6 @@ class Sidebar extends Component {
 const Root = styled.div`
     display: flex;
 `;
-
 
 const Title = styled.h2`
     font-family: Roboto,Helvetica,Arial,sans-serif;

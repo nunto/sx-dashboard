@@ -16,7 +16,6 @@ const items = [
 ]
 
 class ListItems extends Component {
-
     render() {
         return (
             <div>
