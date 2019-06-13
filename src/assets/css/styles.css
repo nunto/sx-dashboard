@@ -1,9 +1,29 @@
+::selection {
+    background: rgba(33, 150, 243, 0.5);
+    /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+    background: rgba(33, 150, 243, 0.5);
+}
+
 .chart_wrap {
     position: relative;
     padding-bottom: 100%;
     height: 0;
     overflow:hidden;
 }
+
+.react-grid-item.react-grid-placeholder {
+    background: #2196F3 !important;
+    opacity: 0.50;
+    transition-duration: 100ms;
+    z-index: 2;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
 
 .chart_div {
     position: absolute;

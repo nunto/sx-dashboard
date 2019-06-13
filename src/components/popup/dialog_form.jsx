@@ -339,7 +339,7 @@ class DialogForm extends Component {
                         />
                         <StyledDBTextField 
                             id='username'
-                            label='username'
+                            label='Username'
                             margin='dense'
                             onChange={this.handleMqttChange('username')}
                         />
