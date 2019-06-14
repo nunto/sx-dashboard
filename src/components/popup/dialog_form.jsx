@@ -13,7 +13,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
-//Icons
+// Icons
 import CloseIcon from '@material-ui/icons/Close';
 import InfoIcon from '@material-ui/icons/Info';
 // Styles
@@ -176,7 +176,7 @@ class DialogForm extends Component {
                 this.setState({ 
                     sensorName: '',
                     dbName: ''
-                 })
+                })
         }
     }
 

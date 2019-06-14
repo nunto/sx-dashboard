@@ -282,13 +282,13 @@ class Dashboard extends PureComponent {
         this.setState({ layouts });
         this.setState({ items: items })
     }
-    
+
     render() {
         // Might need to move FAB into this component
         return(
             <div>
                 <span>
-                <Popup onAddItem={this.onAddItem}/>
+                <Popup onAddItem={this.onAddItem} />
                 </span>
                 <ResponsiveReactGridLayout
                     className='layout'
