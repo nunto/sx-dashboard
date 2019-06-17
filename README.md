@@ -13,6 +13,10 @@ will build the application for production.
 
 ### File Structure
 
+**__tests__**:  
+Contains jest tests.  
+<br />
+
 **assets**:  
 Contains any assets the application will use, such as styles and images.  
 <br />
@@ -27,10 +31,6 @@ The main layout component is found here, it essentially just renders the Sidebar
 
 **server**:  
 Server components, see [Server Component](#server-component).  
-<br />
-
-**__test__**:  
-Contains jest tests.  
 <br />
 
 **theme**:  
