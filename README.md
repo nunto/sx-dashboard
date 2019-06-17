@@ -13,7 +13,7 @@ will build the application for production.
 
 ### File Structure
 
-**__tests__**:  
+**\_\_tests\_\_**:  
 Contains jest tests.  
 <br />
 
