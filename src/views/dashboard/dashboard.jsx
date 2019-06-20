@@ -19,7 +19,28 @@ import '../../../node_modules/react-resizable/css/styles.css';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 var layouts = {};
-var items = [{
+var items = []
+
+
+//items = getFromLS('items', 'item') || []
+//items = JSON.parse(JSON.stringify(items))
+/*
+items.forEach((el) => {
+    if (el.x === null) {
+        el.x = Infinity       
+    }
+    if (el.y === null) {
+        el.y = Infinity 
+    }
+    if (el.w === null) {
+        el.w = 1
+    }
+    if (el.h === null) {
+        el.h = 1
+    }
+})
+*/
+/*var items = [{
     type: 'Timeline',
      w: 8,
      h: 3,
@@ -27,7 +48,8 @@ var items = [{
      y: 0,
      minW: 6,
      minH: 3,
-     maxH: 6
+     maxH: 6,
+     key: 0
 },
 {
     type: 'Line Chart',
@@ -37,7 +59,8 @@ var items = [{
     y: 0,
     minW: 4, 
     minH: 6, 
-    maxH: 12
+    maxH: 12,
+    key: 1
 },
 {
     type: 'Pie Chart',
@@ -47,7 +70,8 @@ var items = [{
     y: 7, 
     minW: 4, 
     minH: 4, 
-    maxH: 12
+    maxH: 12,
+    key: 2
 },
 {
     type: 'Gauge',
@@ -57,10 +81,10 @@ var items = [{
     y: 7, 
     minW: 2, 
     minH: 2, 
-    maxH: 12
+    maxH: 12,
+    key: 3
 }]
-
-
+*/
 class Dashboard extends PureComponent {
     constructor(props) {
         super(props);
@@ -75,7 +99,7 @@ class Dashboard extends PureComponent {
     }
 
     async componentDidMount() {
-        await getFromSQL(1244)
+        await getFromSQL(124234)
         .then(result => {
             layouts = JSON.parse(result.layout);
             items = JSON.parse(result.items);
@@ -89,8 +113,10 @@ class Dashboard extends PureComponent {
                 items = getFromLS('items', 'item') || []
                 items = JSON.parse(JSON.stringify(items))
             }
-            this.setState({ counter: (items.length + 1) })
             
+            var count = getMaxKey(items);
+            this.setState({ counter: count })
+
             // Null checks
             items.forEach((el) => {
                 if (el.x === null) {
@@ -304,7 +330,6 @@ class Dashboard extends PureComponent {
     }
 
     render() {
-        // Might need to move FAB into this component
         return(
             <div>
                 <span>
@@ -352,8 +377,20 @@ async function getFromSQL (id = 0) {
         layout: layout,
         items: items
     }
-    return result
+    return result;
 }
+
+function getMaxKey(items) {
+    var maxKey = -1;
+    items.forEach((el) => {
+        if (el.key > maxKey) {
+            maxKey = el.key
+        }
+    })
+    maxKey += 1;
+    return maxKey;
+}
+
 
 // Get data from localstorage
 function getFromLS(key, type) {
