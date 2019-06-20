@@ -15,6 +15,8 @@ import DialogForm from './dialog_form';
 import SwitchLabel from '../label/switch_label';
 // Icons
 import AddIcon from '@material-ui/icons/Add';
+import SaveIcon from '@material-ui/icons/Save'; 
+
 
 // Current widgets list
 const widgets = ['Timeline', 'Line Chart', 'Pie Chart', 'Gauge']
@@ -53,13 +55,23 @@ class Popup extends Component {
         this.setState({ sqlChecked: !this.state.sqlChecked });
     }
 
+    handleSave = () => {
+        this.props.onSave();
+        //window.location.reload();
+    }
+
     render() {
         return (
             <div>
-            <Fab style={fabStyle} variant='extended' color='primary' aria-label='Add' onClick={this.handleOpen}>
-                <AddIcon />
-                Add Widget
-            </Fab>
+                <span style={fabStyle}>
+                    <Fab style={{marginRight: 4, boxShadow: '0px 1px 4px 0px black'}} color='primary' aria-label='Save' onClick={this.handleSave}>
+                        <SaveIcon />
+                    </Fab>
+                    <Fab style={{boxShadow: '0px 1px 4px 0px black'}} variant='extended' color='primary' aria-label='Add' onClick={this.handleOpen}>
+                        <AddIcon />
+                        Add Widget
+                    </Fab>
+                </span>
             <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby='dialog' maxWidth='sm' fullWidth>
                 <DialogTitle id='dialog-title'>Select a widget
                 </DialogTitle>
@@ -97,7 +109,7 @@ const StyledListItem = withStyles({
             backgroundColor: lightBlue[50],
         }
     }
-})(ListItem)
+})(ListItem);
 
 const fabStyle = {
     margin: 0,
@@ -107,7 +119,7 @@ const fabStyle = {
     left: 'auto',
     position: 'fixed',
     zIndex: 99,
-}
+};
 
 
 // Switch Styling to make it look less like an 'on/off' switch
@@ -124,7 +136,7 @@ const DataSwitch = withStyles({
     },
     checked: {},
     bar: {
-        backgroundColor: lightBlue[200], // Default colour of the bar the switch 'slides' along 
+        backgroundColor: lightBlue[200], // Default colour of the bar the switch slides along 
         opacity: 1
     },
 })(Switch);

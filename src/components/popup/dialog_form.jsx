@@ -252,7 +252,7 @@ class DialogForm extends Component {
                                 <Button onClick={this.handleSqlSubmit} color='primary'>
                                     Create
                                 </Button>
-                    </DialogActions>
+                        </DialogActions>
                     </Dialog>
                     <Snackbar
                 open={this.state.snackbarOpen}
@@ -394,7 +394,7 @@ const StyledSelectField = withStyles({
         marginLeft: 8,
         marginRight: 8
     }
-})(TextField)
+})(TextField);
 
 const StyledTextField = withStyles({
     root: {
@@ -402,7 +402,7 @@ const StyledTextField = withStyles({
         marginLeft: 8,
         marginRight: 8
     }
-})(TextField)
+})(TextField);
 
 const StyledDBTextField = withStyles({
     root: {
@@ -410,7 +410,7 @@ const StyledDBTextField = withStyles({
         marginLeft: 8,
         marginRight: 8
     }
-})(TextField)
+})(TextField);
 
 const StyledSnackbar = withStyles({
     root: {
@@ -419,20 +419,20 @@ const StyledSnackbar = withStyles({
     message: {
         color: 'white',
     }
-})(SnackbarContent)
+})(SnackbarContent);
 
 const StyledInfo = withStyles({
     root: {
     opacity: 0.8,
     fontSize: 20
     }
-})(InfoIcon)
+})(InfoIcon);
 
 const StyledClose = withStyles({
     root: {
         fontSize: 20
     }
-})(CloseIcon)
+})(CloseIcon);
 
 const SectionHeading = withStyles({
     root: {
@@ -441,10 +441,10 @@ const SectionHeading = withStyles({
         fontStyle: 'italic',
         fontWeight: 'bold'
     }
-})(DialogContentText)
+})(DialogContentText);
 
 const SnackbarMsg = styled.p`
     margin-left: 8px;
-`
+`;
 
 export default DialogForm;

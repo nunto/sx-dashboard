@@ -6,6 +6,10 @@
     background: rgba(33, 150, 243, 0.5);
 }
 
+.fab_button {
+    margin: 18px;
+}
+
 .chart_wrap {
     position: relative;
     padding-bottom: 100%;

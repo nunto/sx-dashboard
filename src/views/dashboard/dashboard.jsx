@@ -15,6 +15,7 @@ import '../../../node_modules/react-grid-layout/css/styles.css';
 import '../../../node_modules/react-resizable/css/styles.css';
 
 
+// Responsive Grid Layout to render
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 // Get user's layout from storage if available
@@ -28,20 +29,20 @@ console.log('orig items: ' + originalItems);
 // Initial items to be used if they weren't found
 const initial =  [{
                 type: 'Timeline',
-                 w: 8, 
-                 h: 3, 
-                 x: 0, 
-                 y: 0, 
-                 minW: 6, 
-                 minH: 3, 
+                 w: 8,
+                 h: 3,
+                 x: 0,
+                 y: 0,
+                 minW: 6,
+                 minH: 3,
                  maxH: 6
             },
             {
                 type: 'Line Chart',
-                w: 4, 
-                h: 10, 
-                x: 9, 
-                y: 0, 
+                w: 4,
+                h: 10,
+                x: 9,
+                y: 0,
                 minW: 4, 
                 minH: 6, 
                 maxH: 12
@@ -72,24 +73,25 @@ var items = JSON.parse(JSON.stringify(originalItems))
 console.log(items)
 
 if (originalItems === 'noItems') {
-items = initial.map(function(el, key, list) {
-    return {
-        type: el.type,
-        w: el.w,
-        h: el.h,
-        x: el.x,
-        y: el.y,
-        minW: el.minW,
-        minH: el.minH,
-        maxH: el.maxH,
-        key: key
-    }
-})
+    items = initial.map(function(el, key, list) {
+        return {
+            type: el.type,
+            w: el.w,
+            h: el.h,
+            x: el.x,
+            y: el.y,
+            minW: el.minW,
+            minH: el.minH,
+            maxH: el.maxH,
+            key: key
+        }
+    })
 }
 
 // Counter is used for setting item keys
 const initialCounter = items.length + 1;
 
+// Null checks
 items.forEach((el) => {
     if (el.x === null) {
         el.x = Infinity       
@@ -163,9 +165,9 @@ class Dashboard extends PureComponent {
                         style={removeStyle}
                         onClick={this.onRemoveItem.bind(this, el.key)}
                         >
-                        <CloseIcon />
+                            <CloseIcon />
                     </span>
-                    </div>
+                </div>
             )
         } else if (el.type === 'Pie Chart') {
             return(
@@ -193,11 +195,11 @@ class Dashboard extends PureComponent {
                     style={removeStyle}
                     onClick={this.onRemoveItem.bind(this, el.key)}
                     >
-                    <CloseIcon />
+                        <CloseIcon />
                 </span>
             </div>
         )
-        }
+    }
     
     // Create grid settings for the layout
     onAddItem(type) {
@@ -242,8 +244,33 @@ class Dashboard extends PureComponent {
     }
 
     // Reset the saved layout
-    resetLayout() {
+    resetLayout = () => {
         this.setState({ layouts: {} });
+    }
+
+    // Send Layout and Items to SQL
+    saveToSQL = () => {
+        var layouts = getFromLS('layouts', 'layout') || '';
+        var items = getFromLS('items', 'item') || ''
+        var insertData = {
+            client_id: 124234,
+            layout: JSON.stringify(layouts),
+            items: JSON.stringify(items)
+        }
+        console.log(insertData)
+        console.log(JSON.stringify(insertData))
+        if (layouts !== '' && items !== '') {
+            fetch('http://localhost:8080/insert', {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(insertData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        } else {
+            alert("Error saving")
+        }
     }
 
     // Called when any element is moved or a new one added
@@ -270,10 +297,12 @@ class Dashboard extends PureComponent {
         var items = this.state.items
         if (layouts[bp] !== undefined && items !== undefined) {
         for (var i = 0; i < items.length; i++) {
+            if (layouts[bp][i] !== undefined) {
             items[i]['w'] = layouts[bp][i]['w'];
             items[i]['h'] = layouts[bp][i]['h'];
             items[i]['x'] = layouts[bp][i]['x'];
             items[i]['y'] = layouts[bp][i]['y'];
+            }
         }
     }
         // Save data to LS
@@ -288,7 +317,7 @@ class Dashboard extends PureComponent {
         return(
             <div>
                 <span>
-                <Popup onAddItem={this.onAddItem} />
+                    <Popup onAddItem={this.onAddItem} onSave={this.saveToSQL}/>
                 </span>
                 <ResponsiveReactGridLayout
                     className='layout'
@@ -304,10 +333,9 @@ class Dashboard extends PureComponent {
             </div>
         )
     }
-
 }
 
-
+// Get data from localstorage
 function getFromLS(key, type) {
     let ls = {};
     if (global.localStorage) {
@@ -320,7 +348,8 @@ function getFromLS(key, type) {
     }
     return ls[key];
 }
-
+ 
+// Save data to localstorage
 function saveToLS(key, value, type) {
     if (global.localStorage) {
         global.localStorage.setItem(

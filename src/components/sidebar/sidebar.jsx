@@ -18,6 +18,7 @@ import Devices from '../../views/devices/devices';
 import ListItems from '../items/list_items';
 import MobileListItems from '../../components/items/mobile_list_items';
 import routes from '../../routes';
+import Settings from '../../components/settings/settings';
 import theme from '../../theme/theme';
 // Icons
 import MenuIcon from '@material-ui/icons/Menu';
@@ -32,6 +33,7 @@ class Sidebar extends Component {
     state = {
         mobileOpen: false,
         settingsOpen: false,
+        settingsAnchor: null
     }
 
     // Toggles whether the sidebar has an open icon or not
@@ -47,8 +49,12 @@ class Sidebar extends Component {
     }
     
     // Settings menu could have options for changing the theme colours?
-    settingsMenu = () => {
+    settingsMenu = (event) => {
         // Need to fill in
+        this.setState({
+            settingsOpen: true,
+            settingsAnchor: event.currentTarget
+        })
     }
 
     render() {
@@ -74,6 +80,7 @@ class Sidebar extends Component {
                         >
                             <SettingsIcon />
                         </IconButton>
+                        <Settings open={this.state.settingsOpen} anchor={this.state.settingsAnchor} />
                     </Toolbar>
                 </AppBar>
                 <nav className={classes.drawer}>
@@ -164,11 +171,11 @@ const styles = theme => ({
         flexGrow: 1,
         padding: theme.spacing.unit * 3,
     },
- })
+ });
 
  Sidebar.propTypes = {
      classes: PropTypes.object.isRequired,
      theme: PropTypes.object.isRequired
- }
+ };
 
  export default withStyles(styles, { withTheme: true })(Sidebar);
