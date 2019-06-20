@@ -111,6 +111,7 @@ const StyledListItem = withStyles({
     }
 })(ListItem);
 
+// Styling for the floating save and addwidget buttons
 const fabStyle = {
     margin: 0,
     top: 'auto',
@@ -120,7 +121,6 @@ const fabStyle = {
     position: 'fixed',
     zIndex: 99,
 };
-
 
 // Switch Styling to make it look less like an 'on/off' switch
 const DataSwitch = withStyles({

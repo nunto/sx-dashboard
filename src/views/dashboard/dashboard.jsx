@@ -18,108 +18,99 @@ import '../../../node_modules/react-resizable/css/styles.css';
 // Responsive Grid Layout to render
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-// Get user's layout from storage if available
-const originalLayouts = getFromLS('layouts', 'layout') || {};
-console.log('orig layouts: ' + originalLayouts)
+var layouts = {};
+var items = [{
+    type: 'Timeline',
+     w: 8,
+     h: 3,
+     x: 0,
+     y: 0,
+     minW: 6,
+     minH: 3,
+     maxH: 6
+},
+{
+    type: 'Line Chart',
+    w: 4,
+    h: 10,
+    x: 9,
+    y: 0,
+    minW: 4, 
+    minH: 6, 
+    maxH: 12
+},
+{
+    type: 'Pie Chart',
+    w: 4, 
+    h: 4, 
+    x: 0, 
+    y: 7, 
+    minW: 4, 
+    minH: 4, 
+    maxH: 12
+},
+{
+    type: 'Gauge',
+    w: 2, 
+    h: 3, 
+    x: 5, 
+    y: 7, 
+    minW: 2, 
+    minH: 2, 
+    maxH: 12
+}]
 
-// Get user's charts from storage if available
-const originalItems = getFromLS('items', 'item') || 'noItems'
-console.log('orig items: ' + originalItems);
-
-// Initial items to be used if they weren't found
-const initial =  [{
-                type: 'Timeline',
-                 w: 8,
-                 h: 3,
-                 x: 0,
-                 y: 0,
-                 minW: 6,
-                 minH: 3,
-                 maxH: 6
-            },
-            {
-                type: 'Line Chart',
-                w: 4,
-                h: 10,
-                x: 9,
-                y: 0,
-                minW: 4, 
-                minH: 6, 
-                maxH: 12
-            },
-            {
-                type: 'Pie Chart',
-                w: 4, 
-                h: 4, 
-                x: 0, 
-                y: 7, 
-                minW: 4, 
-                minH: 4, 
-                maxH: 12
-            },
-            {
-                type: 'Gauge',
-                w: 2, 
-                h: 3, 
-                x: 5, 
-                y: 7, 
-                minW: 2, 
-                minH: 2, 
-                maxH: 12
-            }]
-
-// Format items into a readable state for rgl (react-grid-layout)
-var items = JSON.parse(JSON.stringify(originalItems))
-console.log(items)
-
-if (originalItems === 'noItems') {
-    items = initial.map(function(el, key, list) {
-        return {
-            type: el.type,
-            w: el.w,
-            h: el.h,
-            x: el.x,
-            y: el.y,
-            minW: el.minW,
-            minH: el.minH,
-            maxH: el.maxH,
-            key: key
-        }
-    })
-}
-
-// Counter is used for setting item keys
-const initialCounter = items.length + 1;
-
-// Null checks
-items.forEach((el) => {
-    if (el.x === null) {
-        el.x = Infinity       
-    }
-    if (el.y === null) {
-        el.y = Infinity 
-    }
-    if (el.w === null) {
-        el.w = 1
-    }
-    if (el.h === null) {
-        el.h = 1
-    }
-})
-
-console.log('items=> ' + items);
 
 class Dashboard extends PureComponent {
     constructor(props) {
         super(props);
         this.state={
-            layouts: JSON.parse(JSON.stringify(originalLayouts)),
-            counter: initialCounter,
+            layouts: layouts,
+            counter: 999,
             items: items,
             anchorEl: null,
         };
         this.onAddItem = this.onAddItem.bind(this);
         //this.handleClick = this.handleClick.bind(this);
+    }
+
+    async componentDidMount() {
+        await getFromSQL(1244)
+        .then(result => {
+            layouts = JSON.parse(result.layout);
+            items = JSON.parse(result.items);
+
+            if (result.layout === null || result.items === null) {
+                console.log('From LS')
+
+                layouts = getFromLS('layouts', 'layout') || {};
+                layouts = JSON.parse(JSON.stringify(layouts))
+
+                items = getFromLS('items', 'item') || []
+                items = JSON.parse(JSON.stringify(items))
+            }
+            this.setState({ counter: (items.length + 1) })
+            
+            // Null checks
+            items.forEach((el) => {
+                if (el.x === null) {
+                    el.x = Infinity       
+                }
+                if (el.y === null) {
+                    el.y = Infinity 
+                }
+                if (el.w === null) {
+                    el.w = 1
+                }
+                if (el.h === null) {
+                    el.h = 1
+                }
+            })
+            this.setState({ 
+                layouts: layouts,
+                items: items
+             })
+        })
     }
 
     static get defaultProps() {
@@ -333,6 +324,35 @@ class Dashboard extends PureComponent {
             </div>
         )
     }
+}
+
+async function getFromSQL (id = 0) {
+    var selectField = {
+        client_id: id
+    }
+
+    var layout = null
+    var items = null
+
+    await fetch('http://localhost:8080/select', {
+        method: 'POST',
+        mode: 'cors',
+        body: JSON.stringify(selectField),
+    })
+    .then(res => res.json())
+    .then(resJson => {
+        if (resJson != null) {
+            layout = resJson[0].Layout
+            items = resJson[0].Items
+        }
+        
+    })
+    console.log("layout, items: ", layout, items)
+    var result = {
+        layout: layout,
+        items: items
+    }
+    return result
 }
 
 // Get data from localstorage
