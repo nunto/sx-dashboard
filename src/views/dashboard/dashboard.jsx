@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { WidthProvider, Responsive } from 'react-grid-layout';
 import _ from 'lodash';
 // Components
+import AreaChart from '../../components/widgets/area_chart';
 import Timeline from '../../components/widgets/timeline';
 import PieChart from '../../components/widgets/pie_chart';
 import LineChart from '../../components/widgets/line_chart';
@@ -18,73 +19,9 @@ import '../../../node_modules/react-resizable/css/styles.css';
 // Responsive Grid Layout to render
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-var layouts = {};
-var items = []
+var layouts = getFromLS('layouts', 'layout') || {};
+var items = getFromLS('items', 'item') || [];
 
-
-//items = getFromLS('items', 'item') || []
-//items = JSON.parse(JSON.stringify(items))
-/*
-items.forEach((el) => {
-    if (el.x === null) {
-        el.x = Infinity       
-    }
-    if (el.y === null) {
-        el.y = Infinity 
-    }
-    if (el.w === null) {
-        el.w = 1
-    }
-    if (el.h === null) {
-        el.h = 1
-    }
-})
-*/
-/*var items = [{
-    type: 'Timeline',
-     w: 8,
-     h: 3,
-     x: 0,
-     y: 0,
-     minW: 6,
-     minH: 3,
-     maxH: 6,
-     key: 0
-},
-{
-    type: 'Line Chart',
-    w: 4,
-    h: 10,
-    x: 9,
-    y: 0,
-    minW: 4, 
-    minH: 6, 
-    maxH: 12,
-    key: 1
-},
-{
-    type: 'Pie Chart',
-    w: 4, 
-    h: 4, 
-    x: 0, 
-    y: 7, 
-    minW: 4, 
-    minH: 4, 
-    maxH: 12,
-    key: 2
-},
-{
-    type: 'Gauge',
-    w: 2, 
-    h: 3, 
-    x: 5, 
-    y: 7, 
-    minW: 2, 
-    minH: 2, 
-    maxH: 12,
-    key: 3
-}]
-*/
 class Dashboard extends PureComponent {
     constructor(props) {
         super(props);
@@ -95,27 +32,22 @@ class Dashboard extends PureComponent {
             anchorEl: null,
         };
         this.onAddItem = this.onAddItem.bind(this);
-        //this.handleClick = this.handleClick.bind(this);
     }
 
     async componentDidMount() {
         await getFromSQL(124234)
         .then(result => {
-            layouts = JSON.parse(result.layout);
-            items = JSON.parse(result.items);
-
             if (result.layout === null || result.items === null) {
-                console.log('From LS')
-
-                layouts = getFromLS('layouts', 'layout') || {};
-                layouts = JSON.parse(JSON.stringify(layouts))
-
-                items = getFromLS('items', 'item') || []
-                items = JSON.parse(JSON.stringify(items))
+                console.log('From LS');
+                layouts = JSON.parse(JSON.stringify(layouts));
+                items = JSON.parse(JSON.stringify(items));
+            } else {
+                layouts = JSON.parse(result.layout);
+                items = JSON.parse(result.items);
             }
             
             var count = getMaxKey(items);
-            this.setState({ counter: count })
+            this.setState({ counter: count });
 
             // Null checks
             items.forEach((el) => {
@@ -131,11 +63,12 @@ class Dashboard extends PureComponent {
                 if (el.h === null) {
                     el.h = 1
                 }
-            })
+            });
+
             this.setState({ 
                 layouts: layouts,
                 items: items
-             })
+             });
         })
     }
 
@@ -166,7 +99,7 @@ class Dashboard extends PureComponent {
                         className="remove"
                         style={removeStyle}
                         onClick={this.onRemoveItem.bind(this, el.key)}
-                        >
+                    >
                         <CloseIcon />
                     </span>
                 </div>
@@ -181,7 +114,7 @@ class Dashboard extends PureComponent {
                         className="remove"
                         style={removeStyle}
                         onClick={this.onRemoveItem.bind(this, el.key)}
-                        >
+                    >
                             <CloseIcon />
                     </span>
                 </div>
@@ -196,7 +129,22 @@ class Dashboard extends PureComponent {
                         className="remove"
                         style={removeStyle}
                         onClick={this.onRemoveItem.bind(this, el.key)}
-                        >
+                    >
+                        <CloseIcon />
+                    </span>
+                </div>
+            )
+        } else if (el.type === 'Area Chart') {
+            return (
+                <div key={el.key} data-grid={el}>
+                    <div className='graph_paper'>
+                        <AreaChart />
+                    </div>
+                    <span
+                        className="remove"
+                        style={removeStyle}
+                        onClick={this.onRemoveItem.bind(this, el.key)}
+                    >
                         <CloseIcon />
                     </span>
                 </div>
@@ -234,6 +182,9 @@ class Dashboard extends PureComponent {
             case 'Gauge':
                 w = 2; h = 3; minW = 2; minH = 2; maxH = 12;
                 break;
+            case 'Area Chart':
+                w = 4; h = 10; minW = 4; minH = 6; maxH = 12;
+                break;
             default:
                 w = 4; h = 4; minW = 3; minH = 3; maxH = 12;
         }
@@ -267,44 +218,48 @@ class Dashboard extends PureComponent {
 
     // Send Layout and Items to SQL
     saveToSQL = () => {
-        var layouts = getFromLS('layouts', 'layout') || '';
-        var items = getFromLS('items', 'item') || ''
         var insertData = {
             client_id: 124234,
-            layout: JSON.stringify(layouts),
-            items: JSON.stringify(items)
-        }
-        console.log(insertData)
-        console.log(JSON.stringify(insertData))
-        if (layouts !== '' && items !== '') {
-            fetch('http://localhost:8080/insert', {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify(insertData),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-        } else {
-            alert("Error saving")
-        }
+            layout: JSON.stringify(this.state.layouts),
+            items: JSON.stringify(this.state.items)
+        };
+
+        console.log(insertData);
+        console.log(JSON.stringify(insertData));
+
+        fetch('http://localhost:8080/insert', {
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify(insertData),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(resJson => {
+            console.log('Res Json:')
+            console.log(resJson.Result)
+            if (resJson.Result === 'Fail') {
+                alert('Failed to save')
+            }
+        })
     }
 
     // Called when any element is moved or a new one added
     onLayoutChange(layout, layouts) {
         var width = window.innerWidth;
         // Calculate the current breakpoint
-        var bp = 'sm'
+        var bp = 'sm';
         if (width >= 1200) {
-            bp = 'lg'
+            bp = 'lg';
         } else if (width >= 996) {
-            bp = 'md'
+            bp = 'md';
         } else if (width >= 768) {
-            bp = 'sm'
+            bp = 'sm';
         } else if (width >= 480) {
-            bp = 'xs'
+            bp = 'xs';
         } else {
-            bp = 'xxs'
+            bp = 'xxs';
         }
 
         console.log(this.state.items)
@@ -325,7 +280,7 @@ class Dashboard extends PureComponent {
         // Save data to LS
         saveToLS('items', items, 'item');
         saveToLS('layouts', layouts, 'layout');
-        this.setState({ layouts });
+        this.setState({ layouts: layouts });
         this.setState({ items: items })
     }
 
@@ -354,10 +309,10 @@ class Dashboard extends PureComponent {
 async function getFromSQL (id = 0) {
     var selectField = {
         client_id: id
-    }
+    };
 
-    var layout = null
-    var items = null
+    var layout = null;
+    var items = null;
 
     await fetch('http://localhost:8080/select', {
         method: 'POST',
@@ -372,11 +327,11 @@ async function getFromSQL (id = 0) {
         }
         
     })
-    console.log("layout, items: ", layout, items)
+
     var result = {
         layout: layout,
         items: items
-    }
+    };
     return result;
 }
 

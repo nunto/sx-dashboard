@@ -19,7 +19,7 @@ import SaveIcon from '@material-ui/icons/Save';
 
 
 // Current widgets list
-const widgets = ['Timeline', 'Line Chart', 'Pie Chart', 'Gauge']
+const widgets = ['Timeline', 'Line Chart', 'Pie Chart', 'Gauge', 'Area Chart']
 
 // Initial popup where users select which kind of chart they want to create
 class Popup extends Component {
@@ -64,12 +64,12 @@ class Popup extends Component {
         return (
             <div>
                 <span style={fabStyle}>
-                    <Fab style={{marginRight: 4, boxShadow: '0px 1px 4px 0px black'}} color='primary' aria-label='Save' onClick={this.handleSave}>
-                        <SaveIcon />
-                    </Fab>
-                    <Fab style={{boxShadow: '0px 1px 4px 0px black'}} variant='extended' color='primary' aria-label='Add' onClick={this.handleOpen}>
+                <Fab style={{boxShadow: '0px 3px 4px 0px black'}} variant='extended' color='primary' aria-label='Add' onClick={this.handleOpen}>
                         <AddIcon />
                         Add Widget
+                    </Fab>
+                    <Fab style={{marginLeft: 6, boxShadow: '0px 3px 4px 0px black'}} color='primary' aria-label='Save' onClick={this.handleSave}>
+                        <SaveIcon />
                     </Fab>
                 </span>
             <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby='dialog' maxWidth='sm' fullWidth>
@@ -115,9 +115,9 @@ const StyledListItem = withStyles({
 const fabStyle = {
     margin: 0,
     top: 'auto',
-    right: 20,
+    right: 'auto',
     bottom: 20,
-    left: 'auto',
+    left: '20',
     position: 'fixed',
     zIndex: 99,
 };
