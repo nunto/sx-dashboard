@@ -38,6 +38,7 @@ class Dashboard extends PureComponent {
         await getFromSQL(124234)
         .then(result => {
             if (result.layout === null || result.items === null) {
+                alert('Couldn\'t load layout from SQL, using localstorage instead');
                 console.log('From LS');
                 layouts = JSON.parse(JSON.stringify(layouts));
                 items = JSON.parse(JSON.stringify(items));
