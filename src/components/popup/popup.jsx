@@ -96,7 +96,7 @@ class Popup extends Component {
                     ))}
                 </List>
             </Dialog>
-            <DialogForm ref={this.dialogFormRef} onAddItem={this.props.onAddItem} dataType={this.state.sqlChecked} />
+            <DialogForm ref={this.dialogFormRef} onAddItem={this.props.onAddItem} dataType={this.state.sqlChecked}/>
         </div>
         )
     }

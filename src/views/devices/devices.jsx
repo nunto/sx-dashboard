@@ -17,29 +17,28 @@ const Content = styled.h1`
 `;
 
 class Devices extends Component {
-
-    render() {
-        const { classes } = this.props;
-        return (
-        <div className={classes.root}>
-            <ExpansionPanel>
-                <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1bh-content"
-                id="panel1bh-header"
-                >
-                    <Typography className={classes.heading}>Device 1</Typography>
-                    <Typography className={classes.secondaryHeading}>Advantech connected at _______</Typography>
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                < Typography>
-                Device details
-                </Typography>
-                </ExpansionPanelDetails>
-            </ExpansionPanel>
-        </div>
-        )
-    }
+  render() {
+      const { classes } = this.props;
+      return (
+      <div className={classes.root}>
+          <ExpansionPanel>
+              <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
+              >
+                  <Typography className={classes.heading}>Device 1</Typography>
+                  <Typography className={classes.secondaryHeading}>Advantech connected at _______</Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+              < Typography>
+              Device details
+              </Typography>
+              </ExpansionPanelDetails>
+          </ExpansionPanel>
+      </div>
+      )
+  }
 }
 
 const styles = theme => ({
@@ -60,7 +59,5 @@ const styles = theme => ({
 Devices.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
-
 
 export default withStyles(styles)(Devices);

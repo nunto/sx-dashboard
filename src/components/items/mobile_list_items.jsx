@@ -21,7 +21,8 @@ const items = [
     { id: 'Account', icon: <PeopleIcon />, path: '/main/account'},
 ]
 
-// This component renders when the screen is smaller and the sidebar is hidden in a menu
+//  Only real difference with the mobile list is that it has a back arrow at the top next to the main logo
+// This component renders when the screen is smaller and the sidebar is hidden in a menu (md -)
 class MobileListItems extends Component {
     render() {
         return (
@@ -34,7 +35,7 @@ class MobileListItems extends Component {
                             </IconButton>
                         </div>
                     </ListItemIcon>
-                    <ListItemText primary="MTechHub" />
+                    <ListItemText primary="MTechHub"/>
                 </ListItem>
                 <Divider />
                 {items.map(({ id, icon, path }) => (

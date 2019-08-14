@@ -15,6 +15,9 @@ import '../../assets/css/styles.css';
 import '../../../node_modules/react-grid-layout/css/styles.css';
 import '../../../node_modules/react-resizable/css/styles.css';
 
+// TODO: Material ui tabs component (navigation) => use map to 
+// dynamically make one in the dialog based on the selected view.
+
 
 // Responsive Grid Layout to render
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -53,10 +56,10 @@ class Dashboard extends PureComponent {
             // Null checks
             items.forEach((el) => {
                 if (el.x === null) {
-                    el.x = Infinity       
+                    el.x = Number.MAX_VALUE  
                 }
                 if (el.y === null) {
-                    el.y = Infinity 
+                    el.y = Number.MAX_VALUE
                 }
                 if (el.w === null) {
                     el.w = 1
@@ -91,7 +94,7 @@ class Dashboard extends PureComponent {
             cursor: "pointer"
         };
         if (el.type === 'Timeline') {
-            return(
+            return (
                 <div key={el.key} data-grid={el}>
                     <div className='graph_paper'>
                         <Timeline />
@@ -175,16 +178,16 @@ class Dashboard extends PureComponent {
                 w = 8; h = 3; minW = 6; minH = 3; maxH = 6;
                 break;
             case 'Line Chart':
-                w = 4; h = 10; minW = 4; minH = 6; maxH = 12;
+                w = 4; h = 10; minW = 3; minH = 6; maxH = 12;
                 break;
             case 'Pie Chart':
-                w = 4; h = 4; minW = 4; minH = 4; maxH = 12;
+                w = 4; h = 4; minW = 3; minH = 4; maxH = 12;
                 break;
             case 'Gauge':
                 w = 2; h = 3; minW = 2; minH = 2; maxH = 12;
                 break;
             case 'Area Chart':
-                w = 4; h = 10; minW = 4; minH = 6; maxH = 12;
+                w = 4; h = 10; minW = 3; minH = 6; maxH = 12;
                 break;
             default:
                 w = 4; h = 4; minW = 3; minH = 3; maxH = 12;
@@ -192,7 +195,7 @@ class Dashboard extends PureComponent {
         var newWidget = {
             type: type,
             x: (this.state.items.length * 2) % (this.state.cols || 12),
-            y: Infinity, // puts it at the bottom
+            y: Number.MAX_VALUE, // puts it at the bottom
             w: w,
             h: h,
             minW: minW,
@@ -228,7 +231,7 @@ class Dashboard extends PureComponent {
         console.log(insertData);
         console.log(JSON.stringify(insertData));
 
-        fetch('http://localhost:8080/insert', {
+        fetch('http://localhost:8080/api/insert', {
             method: 'POST',
             mode: 'cors',
             body: JSON.stringify(insertData),
@@ -315,7 +318,7 @@ async function getFromSQL (id = 0) {
     var layout = null;
     var items = null;
 
-    await fetch('http://localhost:8080/select', {
+    await fetch('http://localhost:8080/api/select', {
         method: 'POST',
         mode: 'cors',
         body: JSON.stringify(selectField),

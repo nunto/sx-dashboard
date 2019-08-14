@@ -134,7 +134,7 @@ const Title = styled.h2`
     font-weight: 300;
     font-size: 20px;
     line-height: 1.5em;
-    color: Black;
+    color: black;
     flex-grow: 1;
     align: right;
 `;
@@ -178,4 +178,4 @@ const styles = theme => ({
      theme: PropTypes.object.isRequired
  };
 
- export default withStyles(styles, { withTheme: true })(Sidebar);
+export default withStyles(styles, { withTheme: true })(Sidebar);

@@ -16,6 +16,7 @@ class AreaChart extends Component {
               ['2017', 1170, 460],
               ['2018', 660, 1120],
               ['2019', 1030, 540],
+              ['2020', 1015, 505]
             ]}
             options={{
               title: 'Company Performance',

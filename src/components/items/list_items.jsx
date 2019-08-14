@@ -19,7 +19,7 @@ const items = [
     { id: 'Account', icon: <PeopleIcon />, path: '/main/account'},
 ]
 
-// This is the component the renders on larger screens
+// This is the list that renders on larger screens (lg +)
 class ListItems extends Component {
     render() {
         return (
@@ -37,7 +37,6 @@ class ListItems extends Component {
                             <ListItemIcon>{icon}</ListItemIcon>
                             <ListItemText>{id}</ListItemText>
                     </StyledListItem>
-
                 ))}
             </div>
         );

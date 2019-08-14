@@ -13,6 +13,9 @@ import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
+// Components
+//import DataTable from './data_table'
+import ViewDisplay from './view_display';
 // Icons
 import CloseIcon from '@material-ui/icons/Close';
 import InfoIcon from '@material-ui/icons/Info';
@@ -34,7 +37,8 @@ class DialogForm extends Component {
         dbName: '',
         dataTag: data_tags[0],
         dataType: data_types[0],
-        snackbarOpen: false
+        tableOpen: false,
+        snackbarOpen: false,
     }
 
     // Opens dialog, (gets called from popup.jsx)
@@ -42,6 +46,12 @@ class DialogForm extends Component {
         this.setState({ 
             open: true,
             type: type
+        })
+    }
+
+    handleTableToggle = () => {
+        this.setState({
+            tableOpen: !this.state.tableOpen
         })
     }
 
@@ -53,12 +63,13 @@ class DialogForm extends Component {
             this.setState({ snackbarOpen: true })
         }
         else {
+            this.handleTableToggle()
             this.props.onAddItem(this.state.type)
             this.setState({ 
                 open: false,
                 dbName: '',
                 username: '',
-                password: '', 
+                password: '',
                 sensorName: '',
                 dateField: '',
                 runningState: ''
@@ -91,7 +102,7 @@ class DialogForm extends Component {
             open: false,
             dbName: '',
             username: '',
-            password: '', 
+            password: '',
             sensorName: '',
             dateField: '',
             runningState: ''
@@ -214,7 +225,7 @@ class DialogForm extends Component {
                         <StyledDBTextField
                             id='password'
                             type='password'
-                            required
+                            requiredbu
                             label='Password'
                             margin='dense'
                             onChange={this.handleSqlChange('password')}
@@ -254,6 +265,7 @@ class DialogForm extends Component {
                                 </Button>
                         </DialogActions>
                     </Dialog>
+                    <ViewDisplay open={this.state.tableOpen} handleTableToggle={this.handleTableToggle}/>
                     <Snackbar
                 open={this.state.snackbarOpen}
                 onClose={this.handleSnackbarClose}
@@ -361,13 +373,13 @@ class DialogForm extends Component {
                     </DialogActions>
                     </Dialog>
                     <Snackbar
-                open={this.state.snackbarOpen}
-                onClose={this.handleSnackbarClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left'
-                }}
-                >
+                        open={this.state.snackbarOpen}
+                        onClose={this.handleSnackbarClose}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'left'
+                        }}
+                    >
                     <StyledSnackbar 
                         message={
                             <span className='snackbar_msg'>
