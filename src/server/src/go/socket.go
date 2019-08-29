@@ -22,7 +22,7 @@ var upgrader = websocket.Upgrader{
 // updater is called whenever /current is called
 // this function is where web socket messages will be sent from
 func updater(w http.ResponseWriter, r *http.Request) {
-	// upgrader.Upgrade upgades from an http request handler to a
+	// upgrades from an http request handler to a
 	// connection, 'c' which can be used to send and receive messages
 	c, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {

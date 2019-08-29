@@ -28,7 +28,10 @@ import SettingsIcon from '@material-ui/icons/Settings';
 // Width of the sidebar drawer
 const drawerWidth = 240;
 
-// Navigation drawer at the side and toolbar along the top
+/*
+    Loads the AppBar along the top, the navigation drawer along the side, and the content for each of the tabs in the middle.
+    All the main content is rendered between the <main> tags.
+*/
 class Sidebar extends Component {
     state = {
         mobileOpen: false,

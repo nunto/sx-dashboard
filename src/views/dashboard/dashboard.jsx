@@ -15,7 +15,7 @@ import '../../assets/css/styles.css';
 import '../../../node_modules/react-grid-layout/css/styles.css';
 import '../../../node_modules/react-resizable/css/styles.css';
 
-// TODO: Material ui tabs component (navigation) => use map to 
+// TODO: Material ui tabs component (navigation) => use map to
 // dynamically make one in the dialog based on the selected view.
 
 
@@ -319,7 +319,7 @@ async function getFromSQL (id = 0) {
     var items = null;
 
     await fetch('http://localhost:8080/api/select', {
-        method: 'POST',
+        method: 'POST', 
         mode: 'cors',
         body: JSON.stringify(selectField),
     })
@@ -328,8 +328,7 @@ async function getFromSQL (id = 0) {
         if (resJson != null) {
             layout = resJson[0].Layout
             items = resJson[0].Items
-        }
-        
+        }        
     })
 
     var result = {
@@ -365,7 +364,7 @@ function getFromLS(key, type) {
     return ls[key];
 }
  
-// Save data to localstorage
+// Save data to local storage
 function saveToLS(key, value, type) {
     if (global.localStorage) {
         global.localStorage.setItem(

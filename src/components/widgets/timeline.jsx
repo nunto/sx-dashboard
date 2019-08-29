@@ -4,10 +4,27 @@ import Chart from 'react-google-charts';
 import '../../assets/css/charts.css';
 
 
-// Timeline chart to show when the machine was running/off
+/* 
+    Timeline chart to show when the machine was running/off. 
+    This chart uses data fetched from SQL. It also shows how to customize tooltips & colours.
+*/
 class Timeline extends Component {
-    state = {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            width: '70vw',
+            //height: '500px',
+            options: {
+                timeline: { showBarLabels: false },
+                hAxis: {
+                    format: 'h:mm a'
+                },
+                allowHtml: true,
+                isHtml: true,
+                colors: ['#54ff8f', '#ff5454'],
+                avoidOverlappingGridLines: false,
+            }
+        }
     }
     
     componentDidMount() {
@@ -87,24 +104,6 @@ class Timeline extends Component {
             }
             this.setState({ data: data })
         })
-    }
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            width: '70vw',
-            //height: '500px',
-            options: {
-                timeline: { showBarLabels: false },
-                hAxis: {
-                    format: 'h:mm a'
-                },
-                allowHtml: true,
-                isHtml: true,
-                colors: ['#54ff8f', '#ff5454'],
-                avoidOverlappingGridLines: false,
-            }
-        }
     }
 
     render() {

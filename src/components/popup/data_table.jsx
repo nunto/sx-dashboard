@@ -8,7 +8,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 // Styles
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
-
+/*
+    NOT USED ANYMORE -- 
+*/
 class DataTable extends Component {
     constructor(props) {
         super(props)
@@ -55,8 +57,7 @@ class DataTable extends Component {
                 rows: data
              })
         })
-    }
-    
+    }  
 
     render() {
         const { headers, rows } = this.state;

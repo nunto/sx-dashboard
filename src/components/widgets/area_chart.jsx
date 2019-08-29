@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Chart from 'react-google-charts';
 
+/*
+  Sample area chart. Should switch this to create the chart using SQL data.
+*/
 
 class AreaChart extends Component {
     render() {

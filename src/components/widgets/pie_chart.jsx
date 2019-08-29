@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Chart from 'react-google-charts';
 
 
-// Pie Chart -- need to add other methods of getting data
+// Pie Chart
 class PieChart extends Component {
 render() {
       return (

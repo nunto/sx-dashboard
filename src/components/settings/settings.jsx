@@ -3,6 +3,10 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 
+
+/*
+    This class isn't used. Can use this to create a menu on the settings cog though.
+*/
 class Settings extends Component {
     state = {
         anchor: this.props.anchorEl,

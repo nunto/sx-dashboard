@@ -28,7 +28,12 @@ const data_tags = ['ai1', 'ai2', 'ai3', 'di1', 'di2', 'di3']
 const data_types = ['Current', 'Pressure', 'Flow']
 const msg = 'Please fill all required fields.'
 
-// Secondary popup where users select where the chart data should come from
+
+/*
+    This dialog shows up after a user selects which type of chart they'd like to select.
+    It knows whether the user selected SQL or MQTT based on the dataType prop passed down.
+    We use conditional rendering with this var, to show the relevant SQL/MQTT dialog.
+*/
 class DialogForm extends Component {
     state = {
         type: 'Timeline',

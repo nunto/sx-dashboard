@@ -74,8 +74,6 @@ After running the application, visit http://localhost:3000 in your browser. You 
 \label{fig:dash}
 \end{figure}
 
-
-
 The Devices and Account tabs on the side are placeholders, and should be replaced with required tabs. Selecting Add Widget will bring up a menu with different chart types and a SQL/MQTT slider. The MQTT slider will setup a chart using the MQTT protocol to retrieve live data, whereas the SQL slider will setup a chart using a specified SQL database as the data source. Click the name of the chart you wish to create. A second menu will pop up asking for the relevant data, at the moment this is for show and the logic needs to be implemented. Fill in the required fields and select Create to create a chart.
 
 Note that if creating a chart from SQL, at the moment it will give you a view of the last 10 records in that table, along with the column names so you can select the columns to create the chart from.
@@ -83,6 +81,11 @@ Note that if creating a chart from SQL, at the moment it will give you a view of
 A chart should show up on the dashboard. This chart can be manipulated, click and drag to move it, drag the bottom-right corner to resize, and finally press the \textbf{X} in the top-right to delete the chart. Once you are finished with the layout of the dashboard, select the save icon to the right of Add Widget. This will save the layout to SQL, using the server API. At this point, closing the page and re-opening it should load up your last saved dashboard (assuming a successful SQL connection).
 
 There is a cog icon located in the top right corner of the page. Currently this button does nothing, however it can be setup to contain a dropdown allowing theme selection (explained in \_\_\#REF HERE\_\_) as well as any other options that may be required.
+
+\subsection{Brief Code Overview}
+
+Code entry point index.js. Loads layout found in main.jsx. Loads Sidebar. Sidebar loads main section based on path. Dashboard is the main section.
+
 \subsection{Code Walk-through}
 
 All of the files mentioned here are found in /src/. Each component will contain a section: 
@@ -103,7 +106,7 @@ All of the files mentioned here are found in /src/. Each component will contain 
 
 \textbf{The Dashboard Component}
 
-\noindent The dashboard, located under ./views/dashboard/dashboard.jsx is the default rendered view. componentDidMount() is called as soon as the component is mounted, in here is where we asynchronously make a call to SQL to retrieve the last-saved dashboard layout. In the case that there is no found layout fromm SQL, we attempt to use the last layout stored in localstorage. Else, the dashboard will be a blank slate.
+\noindent The dashboard, located under ./views/dashboard/dashboard.jsx is the default rendered view. componentDidMount() is called as soon as the component is mounted, in here is where we asynchronously make a call to SQL to retrieve the last-saved dashboard layout. In the case that there is no found layout from SQL, we attempt to use the last layout stored in localstorage. Else, the dashboard will be a blank slate.
 
 \noindent The createElement function will create a chart for the dashboard using the passed \textit{el} object. 
 

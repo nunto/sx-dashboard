@@ -38,6 +38,7 @@ class MobileListItems extends Component {
                     <ListItemText primary="MTechHub"/>
                 </ListItem>
                 <Divider />
+                {/* Render each menu item, redirecting to it's specified path on click */}
                 {items.map(({ id, icon, path }) => (
                     <StyledListItem 
                         button
@@ -54,6 +55,7 @@ class MobileListItems extends Component {
     }
 }
 
+// Styling each item within the list
 const StyledListItem = withStyles({
     root: {
         '&$focusVisible': {

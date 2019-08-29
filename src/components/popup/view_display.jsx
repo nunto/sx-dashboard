@@ -9,7 +9,13 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
+/*
+    When creating a chart through SQL, this Dialog gets displayed showing all the data from whichever
+    table they specified. They would then select a column and hit create. Currently, the logic behind this
+    popup has not been implemented as we weren't too sure what we'd need displayed. 
 
+    The fetch should be changed to a post with the body being the selected column(s). The API would need to be changed too.
+*/
 class ViewDisplay extends Component {
     constructor(props) {
         super(props);
@@ -24,7 +30,6 @@ class ViewDisplay extends Component {
         await fetch('http://localhost:8080/api/get-view')
         .then(res => res.json())
         .then(resJson => {
-            console.log(resJson)
             var headers = resJson.Cols;
             var rows = resJson.Rows;
             var content = [];
@@ -38,15 +43,11 @@ class ViewDisplay extends Component {
             console.log(rows[0])
 
             for (let i = 0; i < rows.length; i++) {
-                console.log("=================================================")
                 for (let j = 0; j < rows[i].length; j++) {
                     console.log(rows[i][j])
                     content[j].push(rows[i][j]);
                 }
             }
-
-            console.log("CONTENT:");
-            console.log(content);
             this.setState({ 
                 tabContent: content,
                 headers: headers
@@ -68,7 +69,7 @@ class ViewDisplay extends Component {
             }
         }
 
-        // Use this to map out the tabcontainers 
+        // Use this to map out the tab containers 
         return content;
     }
 

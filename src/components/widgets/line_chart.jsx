@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Chart from 'react-google-charts';
 
 
-// Line Chart -- need to add other methods of getting data
+// Line Chart
 class LineChart extends Component {
     render() {
         return ( 

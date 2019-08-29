@@ -8,6 +8,7 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+
 // eslint-disable-next-line
 const Content = styled.h1`
     font-family: Roboto,Helvetica,Arial,sans-serif;
@@ -15,6 +16,8 @@ const Content = styled.h1`
     line-height: 1.5em;
     color: Black; 
 `;
+
+// Sample devices page
 
 class Devices extends Component {
   render() {

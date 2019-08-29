@@ -21,7 +21,10 @@ import SaveIcon from '@material-ui/icons/Save';
 // Current widgets list
 const widgets = ['Timeline', 'Line Chart', 'Pie Chart', 'Gauge', 'Area Chart']
 
-// Initial popup where users select which kind of chart they want to create
+/*
+    The initial popup where a user will select which kind of chart they want to create.
+*/
+
 class Popup extends Component {
     constructor(props) {
         super(props);

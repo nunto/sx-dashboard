@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 
 // Label that appears on either side of the switch component
+// Used in the popup menu to select MQTT/SQL when creating a widget
 function SwitchLabel(props) {
     if (props.bold === true) {
         return (
