@@ -65,7 +65,13 @@ class Timeline extends Component {
 
     // Get data from api created in go
     async getData() {
-        await fetch('http://172.18.19.97:8080/api/timeline')
+        //await fetch('http://172.18.19.97:8080/api/timeline')
+        await fetch('http://localhost:64426/api/WidgetConstructor/Timeline', {
+            headers: {
+                'Authorization': 'Bearer ooD9WC1_msIxwDvQYLNjYXIBotZhhzEjeOkWS_DkIXQE_mIjG15EMhi8TvvgnpnQbxWuNTKH1cX2HasseEdYxsJ7qD-JTJ54SBSnY7CTpkfRt9-TlFTlYLflIngu3U65JrD_Cyd_ezMfxMWikJR6ursA8qEX-3puJx6rrHMf0BxLDFwOliP5Pnn4-CkgkoVaXPiXay_OWP0HORRHNkbbViutSbiajF7RH8QJ1roaOfI_XWsyqq7s_rBvWTEFHu1ytfWERhGHIhntw6xzmbPnQhdIxUgU3G3VGPecPujrGnU',
+                'Content-Type': 'application/json'
+            },
+        })
         .then((res) => res.json())
         .then((resJson) => {
             // Set up the chart data

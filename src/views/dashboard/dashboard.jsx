@@ -231,13 +231,17 @@ class Dashboard extends PureComponent {
         console.log(insertData);
         console.log(JSON.stringify(insertData));
 
-        fetch('http://localhost:8080/api/insert', {
+        // Original api request
+    //http://localhost:8080/api/insert
+        
+        fetch('http://localhost:64426/api/DashboardLayout/Save', {
             method: 'POST',
-            mode: 'cors',
-            body: JSON.stringify(insertData),
             headers: {
+                'Authorization': 'Bearer ooD9WC1_msIxwDvQYLNjYXIBotZhhzEjeOkWS_DkIXQE_mIjG15EMhi8TvvgnpnQbxWuNTKH1cX2HasseEdYxsJ7qD-JTJ54SBSnY7CTpkfRt9-TlFTlYLflIngu3U65JrD_Cyd_ezMfxMWikJR6ursA8qEX-3puJx6rrHMf0BxLDFwOliP5Pnn4-CkgkoVaXPiXay_OWP0HORRHNkbbViutSbiajF7RH8QJ1roaOfI_XWsyqq7s_rBvWTEFHu1ytfWERhGHIhntw6xzmbPnQhdIxUgU3G3VGPecPujrGnU',
                 'Content-Type': 'application/json'
-            }
+            },
+            mode: 'cors',
+            body: JSON.stringify(insertData)
         })
         .then(res => res.json())
         .then(resJson => {
@@ -317,9 +321,21 @@ async function getFromSQL (id = 0) {
 
     var layout = null;
     var items = null;
+    /*
+
+    This fetch was used before switching ot c# api
 
     await fetch('http://localhost:8080/api/select', {
         method: 'POST', 
+        mode: 'cors',
+        body: JSON.stringify(selectField),
+    })*/
+    await fetch('http://localhost:64426/api/DashboardLayout/Retrieve', {
+        headers: {
+            'Authorization': 'Bearer ooD9WC1_msIxwDvQYLNjYXIBotZhhzEjeOkWS_DkIXQE_mIjG15EMhi8TvvgnpnQbxWuNTKH1cX2HasseEdYxsJ7qD-JTJ54SBSnY7CTpkfRt9-TlFTlYLflIngu3U65JrD_Cyd_ezMfxMWikJR6ursA8qEX-3puJx6rrHMf0BxLDFwOliP5Pnn4-CkgkoVaXPiXay_OWP0HORRHNkbbViutSbiajF7RH8QJ1roaOfI_XWsyqq7s_rBvWTEFHu1ytfWERhGHIhntw6xzmbPnQhdIxUgU3G3VGPecPujrGnU',
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
         mode: 'cors',
         body: JSON.stringify(selectField),
     })
