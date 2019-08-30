@@ -1,9 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"database/sql"
+	"fmt"
 	"net/http"
+
 	_ "github.com/denisenkom/go-mssqldb"
 	//"io/ioutil"
 	"encoding/json"
@@ -15,7 +16,7 @@ type sqlview struct {
 
 type view struct {
 	ColNames string
-	Rows string
+	Rows     string
 }
 
 func getView(w http.ResponseWriter, r *http.Request) {
@@ -27,7 +28,7 @@ func getView(w http.ResponseWriter, r *http.Request) {
 	if errBody != nil {
 		fmt.Println("Error reading body: ", errBody.Error())
 	}
-	
+
 	var viewQuery sqlview
 	jsonErr := json.Unmarshal(body, &viewQuery)
 	if jsonErr != nil {
@@ -73,10 +74,10 @@ func getView(w http.ResponseWriter, r *http.Request) {
 			if data == nil {
 				row[i] = "NULL"
 			} else {
-				row[i] = string(data) 
+				row[i] = string(data)
 			}
 		}
-		result = append(result, row)	
+		result = append(result, row)
 	}
 
 	type json_result struct {
@@ -84,7 +85,7 @@ func getView(w http.ResponseWriter, r *http.Request) {
 		Rows [][]string
 	}
 
-	var returnJson = json_result {
+	var returnJson = json_result{
 		Cols: cols,
 		Rows: result,
 	}

@@ -11,7 +11,7 @@
 \usepackage[table]{xcolor}
 \usepackage{parskip}
 \definecolor{light-gray}{gray}{0.15}
-\usepackage[colorlinks=true, allcolors=light-gray]{hyperref}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
 
 \newcommand{\code}[1]{\texttt{#1}}
 
@@ -80,15 +80,11 @@ Note that if creating a chart from SQL, at the moment it will give you a view of
 
 A chart should show up on the dashboard. This chart can be manipulated, click and drag to move it, drag the bottom-right corner to resize, and finally press the \textbf{X} in the top-right to delete the chart. Once you are finished with the layout of the dashboard, select the save icon to the right of Add Widget. This will save the layout to SQL, using the server API. At this point, closing the page and re-opening it should load up your last saved dashboard (assuming a successful SQL connection).
 
-There is a cog icon located in the top right corner of the page. Currently this button does nothing, however it can be setup to contain a dropdown allowing theme selection (explained in \_\_\#REF HERE\_\_) as well as any other options that may be required.
-
-\subsection{Brief Code Overview}
-
-Code entry point index.js. Loads layout found in main.jsx. Loads Sidebar. Sidebar loads main section based on path. Dashboard is the main section.
+There is a cog icon located in the top right corner of the page. Currently this button does nothing, however it can be setup to contain a drop-down allowing customization (ex: theme selection by modifying the values used in theme.jsx).
 
 \subsection{Code Walk-through}
 
-All of the files mentioned here are found in /src/. Each component will contain a section: 
+All of the files mentioned here are found in /src/. Just about every react component will contain a render section: 
 \begin{verbatim}
     render() {
         return (
@@ -96,7 +92,9 @@ All of the files mentioned here are found in /src/. Each component will contain 
         );
     }
 \end{verbatim}
-\noindent Anything here is what will be rendered whenever this component gets called by another file. The entry point for this project is ./index.js, which contains a router that essentially redirects to ./layout/main.jsx. Main.jsx is the main layout for the project, it just renders the Sidebar component found in ./components/sidebar/sidebar.jsx.
+\noindent Anything here is what will be rendered whenever this component gets called by another file.  
+
+\noindent The entry point for this project is ./index.js, which contains a router that essentially redirects to ./layout/main.jsx. Main.jsx is the main layout for the project, it just renders the Sidebar component found in ./components/sidebar/sidebar.jsx.
 
 \textbf{The Sidebar Component}
 
@@ -108,48 +106,49 @@ All of the files mentioned here are found in /src/. Each component will contain 
 
 \noindent The dashboard, located under ./views/dashboard/dashboard.jsx is the default rendered view. componentDidMount() is called as soon as the component is mounted, in here is where we asynchronously make a call to SQL to retrieve the last-saved dashboard layout. In the case that there is no found layout from SQL, we attempt to use the last layout stored in localstorage. Else, the dashboard will be a blank slate.
 
-\noindent The createElement function will create a chart for the dashboard using the passed \textit{el} object. 
+\noindent There are functions for creating a chart, and creating the grid layout. It is fairly straightforward, the layout is rendered by mapping every item through the createElement function.  
+
+\textbf{The Add Widget Popup}
+
+\noindent There is a popup folder under components containing three files. They each create a separate dialog, for each stage of the widget creation process. Props \& References are used here, they simply allow you to access certain sections of the other popups. Conditional rendering is also used to allow for different popups depending on if MQTT or SQL is being used as the data source.
+
+\textbf{Widgets}
+
+\noindent Widgets are created using React-Google-Charts. Their documentation makes it quite easy to create any new charts you may require. Within the widgets folder, most are standard \& currently just using sample data. However, timeline.jsx shows how to customize tooltips, while also getting data from SQL. While gauge.jsx shows how to setup a websocket to retrieve MQTT data. 
 
 
 \subsection{Project Structure}
 \subsubsection{doc}
 
-The doc folder contains this pdf and the .tex file used to generate it. Pdflatex is required to regenerate this document locally, however there are compilers online you can use as well if you ever need to make changes. Assets contains the images used in the document.
+The doc folder contains this pdf and the .tex file used to generate it. Pdflatex is required to regenerate this document locally, however there are compilers online you can use as well if you ever need to make changes. Assets contains the images used in the document
 
-% ASSETS
-\subsubsection{/src/assets}
-    \paragraph{css}
-    This contains the style sheets used in the project.
-    \paragraph{img}
-    Images used on the webpage will go here. (MTech Logo should be added and used on the menu)
+\subsubsection{public}
 
-% COMPONENTS
-\subsubsection{/src/components}
-    \paragraph{items}
+The public contains your index.html file, a favicon \& a web app manifest. 
 
-    \paragraph{label}
+\subsubsection{src}
 
-    \paragraph{popup}
+All the main code is found under src. The components folder contains all the different components to be used across the application. The server directory contains the golang code for most of the backend. Check the README for more info on what each go file does \& how to build.
 
-    \paragraph{settings}
+\subsubsection{get\_view\_server\_files}
 
-    \paragraph{sidebar}
+There was originally a separate server folder setup to test out getting the top 10 rows of a view, as well as saving \& retrieving layouts. 
 
-    \paragraph{widgets}
+\subsubsection{dotnet\_api\_files}
 
-\subsubsection{/src/layout}
-    \paragraph{main}
+These are the c\# files created when converting from go to .net.  
 
-\subsubsection{/src/views}
-    \paragraph{account}
+\section{TODO List}
 
-    \paragraph{dashboard}
+This project still has some additions required.
 
-    \paragraph{devices}
-
-\subsection{Libraries}
-
-
-\section{Things to update}
-
+\begin{itemize}
+\item When creating a chart, currently they just use sample data. They should be updated to use whatever data source is entered in the popups. One way to go about this would be to get the data source from the popup, and pass through an object containing this info as a prop when creating the widget (eg: \textless Timeline ds=\{data\_source\_var\}/\textgreater).
+\item The popups where a user enters their SQL/MQTT data are currently just for show. Eventually you will need to send this to an API you've setup to access their database.
+\item Finish up the MQTT portion of the .net file. Currently I have it working as an MQTT client, however it will need to connect to the broker we are using, and send data to the correct gauge widgets. \href{https://gist.github.com/prabirshrestha/2765381}{Refer to this gist as an example}.
+\item The files in get\_view\_server\_files has not been transferred to .net yet. The go code for it should be clear and fairly easy to convert. These files handle the saving \& loading of the layout, as well as the preview when selecting from SQL.
+\item Testing .net implementation of the main server files. They are converted and work when tested via Postman, however I did not have enough time to test it fully within the React App. Changing the fetch requests to use the go/.net APIs is very easy if you need to at any point.   
+\item You may notice an error on the Timeline, saying "Invalid data table format". This is due to the Timeline not being able to reach the API where it gets it's data from.
+\item Currently on load up there is a fetch called to api/get-view. I believe this is accidentally getting called early, as the popup where the view is displayed technically is mounted, just invisible. To fix this, you would have a boolean prop for whether it is visible yet, if true, then the fetch within componentDidMount should be allowed to run.  
+\end{itemize}
 \end{document}
